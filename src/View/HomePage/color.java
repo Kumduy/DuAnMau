@@ -25,7 +25,7 @@ public class color extends javax.swing.JPanel {
 @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        GradientPaint gra = new GradientPaint(0, 0, Color.decode("#1D976C"), 0, getHeight(), Color.decode("#99f2c8"));
+        GradientPaint gra = new GradientPaint(getWidth(), getHeight(), Color.decode("#1D976C"), 0, 0, Color.decode("#99f2c8"));
         g2d.setPaint(gra);
         g2d.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g); 
