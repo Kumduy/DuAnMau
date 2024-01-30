@@ -4,6 +4,12 @@
  */
 package View.HoaDon;
 
+import entity.HoaDon_entity;
+import entity.HDCTmodel_entity;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import service.HoaDon_service;
+
 /**
  *
  * @author DELL
@@ -15,6 +21,43 @@ public class HoaDon_view extends javax.swing.JPanel {
      */
     public HoaDon_view() {
         initComponents();
+        FillTableHD(se.getListHD());
+        FillTableHDCT(se.getListHDCT());
+    }
+
+    HoaDon_service se = new HoaDon_service();
+
+    public void FillTableHD(ArrayList<HoaDon_entity> ls) {
+        DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
+        model.setRowCount(0);
+        for (HoaDon_entity l : ls) {
+            Object[] data = new Object[7];
+            data[0] = tbHoaDon.getRowCount() + 1;
+            data[1] = l.getMaHD();
+            data[2] = l.getMaKH();
+            data[3] = l.getMaNV();
+            data[4] = l.getNgayTao();
+            data[5] = l.getTongTien();
+            data[6] = l.isTrangThai() ? "Đã thanh toán" : "chưa thanh toán";
+            model.addRow(data);
+        }
+    }
+
+    public void FillTableHDCT(ArrayList<HDCTmodel_entity> ls) {
+        DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
+        model.setRowCount(0);
+        for (HDCTmodel_entity l : ls) {
+            Object[] data = new Object[8];
+            data[0] = tbHDCT.getRowCount() + 1;
+            data[1] = l.getMaHD();
+            data[2] = l.getMaHDCT();
+            data[3] = l.getMaSP();
+            data[4] = l.getTenSP();
+            data[5] = l.getDonGia();
+            data[6] = l.getSoLuong();
+            data[7] = l.getTrangThai();
+            model.addRow(data);
+        }
     }
 
     /**
@@ -28,9 +71,9 @@ public class HoaDon_view extends javax.swing.JPanel {
 
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbHoaDon = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbHDCT = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -55,7 +98,7 @@ public class HoaDon_view extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Hóa đơn");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -63,9 +106,9 @@ public class HoaDon_view extends javax.swing.JPanel {
                 "STT", "Mã hóa đơn", "Khách hàng", "Nhân viên", "Ngày tạo", "Tổng tiền", "Trạng thái"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbHoaDon);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbHDCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -73,8 +116,8 @@ public class HoaDon_view extends javax.swing.JPanel {
                 "STT", "Mã hóa đơn", "Mã hóa đơn chi tiết", "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Trạng thái "
             }
         ));
-        jTable2.setOpaque(false);
-        jScrollPane2.setViewportView(jTable2);
+        tbHDCT.setOpaque(false);
+        jScrollPane2.setViewportView(tbHDCT);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Hóa đơn chi tiêt");
@@ -273,9 +316,9 @@ public class HoaDon_view extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbHDCT;
+    private javax.swing.JTable tbHoaDon;
     // End of variables declaration//GEN-END:variables
 }

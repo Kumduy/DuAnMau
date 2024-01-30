@@ -18,6 +18,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import service.HoaDon_service;
 
 /**
  *
@@ -45,7 +47,7 @@ public class HomePage extends javax.swing.JFrame {
         jp.setOpaque(true);
         jp.setBackground(new Color(7, 164, 121));
         jp.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        
     }
 
     public void mouseout(JPanel jp) {
@@ -65,8 +67,10 @@ public class HomePage extends javax.swing.JFrame {
     private void setMainPanel(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
+        SwingUtilities.invokeLater(() -> {
         mainPanel.repaint();
         mainPanel.revalidate();
+    });
     }
 
     /**
@@ -112,7 +116,6 @@ public class HomePage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1264, 573));
         setSize(new java.awt.Dimension(1300, 573));
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
@@ -526,6 +529,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void titlePanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseClicked
         setMainPanel(new HoaDon_view());
+        
     }//GEN-LAST:event_titlePanel5MouseClicked
 
     private void titlePanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseExited
