@@ -4,6 +4,7 @@
  */
 package repository;
 
+import entity.HoaDon_entity;
 import java.util.ArrayList;
 import java.sql.*;
 import entity.User_entity;
@@ -37,4 +38,6 @@ public class QLTK_repository {
         }
         return ls;
     }
+    
+    
 }

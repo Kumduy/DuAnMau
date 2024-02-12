@@ -47,6 +47,7 @@ public class DangNhap_view extends javax.swing.JFrame {
         if (login_service.check(txtUserName.getText(), txtPassword.getText())) {
             HomePage homePage = new HomePage();
             homePage.setVisible(true);
+            homePage.u = login_service.getUser(txtUserName.getText(), txtPassword.getText());
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản");

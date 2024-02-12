@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import service.HoaDon_service;
-
+import entity.User_entity;
 /**
  *
  * @author DELL
@@ -42,6 +42,8 @@ public class HomePage extends javax.swing.JFrame {
         upImage(Icon5);
         upImage(Icon6);
     }
+    
+    public static User_entity u;
 
     public void mouseEnter(JPanel jp) {
         jp.setOpaque(true);
