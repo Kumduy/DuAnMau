@@ -9,7 +9,10 @@ import entity.HoaDon_entity;
 import entity.SanPhamModel_view;
 import entity.HDCTmodel_entity;
 import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import service.HoaDon_service;
@@ -39,7 +42,7 @@ public class HoaDon_view extends javax.swing.JPanel {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         hd.setNgayTao(sqlDate);
         hd.setTongTien(0);
-        hd.setTrangThai(false);
+        hd.setTrangThai("Chưa thanh toán");
         return hd;
     }
 
@@ -54,7 +57,7 @@ public class HoaDon_view extends javax.swing.JPanel {
             data[3] = l.getMaNV();
             data[4] = l.getNgayTao();
             data[5] = l.getTongTien();
-            data[6] = l.isTrangThai() ? "Đã thanh toán" : "Chưa thanh toán";
+            data[6] = l.getTrangThai();
             model.addRow(data);
         }
     }
@@ -79,7 +82,8 @@ public class HoaDon_view extends javax.swing.JPanel {
 
     public void clear() {
         txtMaKH.setText("");
-        lbTongTien.setText("0VND");
+        lbTongTien.setText("0 VND");
+        dcNgayTao.setDate(java.util.Date.from(Instant.now()));
     }
 
     public void FillTableHDCT(ArrayList<HDCTmodel_entity> ls) {
@@ -127,8 +131,8 @@ public class HoaDon_view extends javax.swing.JPanel {
         lbTongTien = new javax.swing.JLabel();
         btnPay = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnUpdate = new javax.swing.JButton();
 
@@ -236,22 +240,27 @@ public class HoaDon_view extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Hủy");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Hủy");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseClicked(evt);
+            }
+        });
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Xóa");
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnClear.setText("Clear");
+        btnClear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton4MouseClicked(evt);
+                btnClearMouseClicked(evt);
             }
         });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -277,23 +286,26 @@ public class HoaDon_view extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtMaKH)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbTongTien)
-                                    .addComponent(dcNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 12, Short.MAX_VALUE))))
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                                .addComponent(lbTongTien)
+                                .addGap(0, 71, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dcNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,11 +329,11 @@ public class HoaDon_view extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(btnAdd)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnDelete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(btnClear)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -370,13 +382,13 @@ public class HoaDon_view extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        clear();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
@@ -406,7 +418,7 @@ public class HoaDon_view extends javax.swing.JPanel {
         int selectedRow = tbSP.getSelectedRow();
         String maHoaDon = JOptionPane.showInputDialog("Nhập mã hóa đơn:");
         String soLuong = JOptionPane.showInputDialog("Nhập số lượng mua:");
-        if (maHoaDon != null && soLuong != null) {
+        if (maHoaDon != null && soLuong != null && se.getListHDbyID(Integer.parseInt(maHoaDon)).size() > 0) {
             int soLuongMua = Integer.parseInt(soLuong);
             int idHoaDon = Integer.parseInt(maHoaDon);
             int idSanPham = selectedRow + 1;
@@ -419,16 +431,23 @@ public class HoaDon_view extends javax.swing.JPanel {
             FillTableHD(se.getListHD());
             FillTableSP(se.getListSP());
             clear();
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng thông tin");
         }
     }//GEN-LAST:event_tbSPMouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         int mahdct = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 2);
         int mahd = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 1);
+        int maSP = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 3);
+        int soLuong = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 6);
+        int tonKho = se.getListSPbyID(maSP).get(0).getSoLuong() + soLuong;
+        se.updateSP(tonKho, maSP);
         String kq = se.xoaHDCT(mahdct, mahd);
         JOptionPane.showMessageDialog(this, kq);
         FillTableHDCT(se.getListHDCT(mahd));
         FillTableHD(se.getListHD());
+        FillTableSP(se.getListSP());
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -442,9 +461,9 @@ public class HoaDon_view extends javax.swing.JPanel {
         clear();
     }//GEN-LAST:event_btnPayMouseClicked
 
-    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-
-    }//GEN-LAST:event_jButton4MouseClicked
+    private void btnClearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearMouseClicked
+        clear();
+    }//GEN-LAST:event_btnClearMouseClicked
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
         int ma = se.getListHD().get(tbHoaDon.getSelectedRow()).getMaHD();
@@ -461,14 +480,28 @@ public class HoaDon_view extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
+        ArrayList<HDCTmodel_entity> ls = se.getListHDCT(se.getListHD().get(tbHoaDon.getSelectedRow()).getMaHD());
+        for (HDCTmodel_entity l : ls) {
+            int soluong = se.getListSPbyID(l.getMaSP()).get(0).getSoLuong() + l.getSoLuong();
+            se.updateSP(soluong, l.getMaSP());
+        }
+        String kq = se.huyHD(se.getListHD().get(tbHoaDon.getSelectedRow()).getMaHD());
+        JOptionPane.showMessageDialog(this, kq);
+        FillTableHD(se.getListHD());
+        FillTableSP(se.getListSP());
+        DefaultTableModel model = (DefaultTableModel) tbHDCT.getModel();
+        model.setRowCount(0);
+    }//GEN-LAST:event_btnDeleteMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPay;
     private javax.swing.JButton btnUpdate;
     private com.toedter.calendar.JDateChooser dcNgayTao;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

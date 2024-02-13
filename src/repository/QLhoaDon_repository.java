@@ -19,7 +19,7 @@ public class QLhoaDon_repository {
     DbConnection dbconnection = new DbConnection();
 
     public ArrayList<HoaDon_entity> getList() {
-        String sql = "select * from HOADON";
+        String sql = "select * from HOADON WHERE TrangThai != N'Hủy'";
         ArrayList<HoaDon_entity> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -29,7 +29,7 @@ public class QLhoaDon_repository {
                         rs.getInt("MaKhachHang"),
                         rs.getDouble("TongTien"),
                         rs.getDate("NgayTaoHoaDon"),
-                        rs.getBoolean("TrangThai"));
+                        rs.getString("TrangThai"));
                 ls.add(hd);
             }
         } catch (Exception e) {
@@ -50,7 +50,7 @@ public class QLhoaDon_repository {
                         rs.getInt("MaKhachHang"),
                         rs.getDouble("TongTien"),
                         rs.getDate("NgayTaoHoaDon"),
-                        rs.getBoolean("TrangThai"));
+                        rs.getString("TrangThai"));
                 ls.add(hd);
             }
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class QLhoaDon_repository {
     }
 
     public ArrayList<HoaDon_entity> getHDbyID(int maHD) {
-        String sql = "select * from HOADON where MaHoaDon = ?";
+        String sql = "select * from HOADON where MaHoaDon = ? AND TrangThai != N'Hủy'";
         ArrayList<HoaDon_entity> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, maHD);
@@ -71,7 +71,7 @@ public class QLhoaDon_repository {
                         rs.getInt("MaKhachHang"),
                         rs.getDouble("TongTien"),
                         rs.getDate("NgayTaoHoaDon"),
-                        rs.getBoolean("TrangThai"));
+                        rs.getString("TrangThai"));
                 ls.add(hd);
             }
         } catch (Exception e) {
@@ -141,6 +141,47 @@ public class QLhoaDon_repository {
         return ls;
     }
 
+    public ArrayList<SanPhamModel_view> getSPbyID(int id) {
+        String sql = "SELECT \n"
+                + "    SANPHAM.*, \n"
+                + "    CHITIETSANPHAM.MaChiTietSanPham, \n"
+                + "    CHITIETSANPHAM.TenChiTietSanPham, \n"
+                + "    CHITIETSANPHAM.GiaBan, \n"
+                + "    CHITIETSANPHAM.SoLuongTon, \n"
+                + "    MAU.MauSac, \n"
+                + "    SIZE.Size, \n"
+                + "    DANHMUC.TenDanhMuc\n"
+                + "FROM \n"
+                + "    SANPHAM\n"
+                + "INNER JOIN \n"
+                + "    CHITIETSANPHAM ON SANPHAM.MaSanPham = CHITIETSANPHAM.SanPham\n"
+                + "INNER JOIN \n"
+                + "    MAU ON CHITIETSANPHAM.MaMau = MAU.MaMau\n"
+                + "INNER JOIN \n"
+                + "    SIZE ON CHITIETSANPHAM.MaSize = SIZE.MaSize\n"
+                + "INNER JOIN \n"
+                + "    DANHMUC ON SANPHAM.MaDanhMuc = DANHMUC.MaDanhMuc\n"
+                + "WHERE MaSanPham = " + id ;
+        ArrayList<SanPhamModel_view> ls = new ArrayList<>();
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                SanPhamModel_view sp1 = new SanPhamModel_view(rs.getInt("MaChiTietSanPham"),
+                        rs.getInt("SoLuongTon"),
+                        rs.getString("TenSanPham"),
+                        rs.getString("TenDanhMuc"),
+                        rs.getString("MauSac"),
+                        rs.getDouble("GiaBan"),
+                        rs.getDouble("Size"),
+                        rs.getBoolean("TrangThai"));
+                ls.add(sp1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ls;
+    }
+    
     public Boolean addHD(HoaDon_entity hd) {
         String sql = "INSERT INTO HOADON (MaKhachHang, MaNguoiDung, TongTien, NgayTaoHoaDon, TrangThai) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -148,7 +189,7 @@ public class QLhoaDon_repository {
             ps.setString(2, String.valueOf(hd.getMaNV()));
             ps.setString(3, String.valueOf(hd.getTongTien()));
             ps.setString(4, String.valueOf(hd.getNgayTao()));
-            ps.setBoolean(5, hd.isTrangThai());
+            ps.setString(5, hd.getTrangThai());
             int kq = ps.executeUpdate();
             if (kq > 0) {
                 return true;
@@ -173,6 +214,19 @@ public class QLhoaDon_repository {
             ps2.setDouble(1, tongTien);
             ps2.setInt(2, idHD);
             int kq = ps2.executeUpdate();
+            if (kq > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean huyHD(int idHD){
+        String sqlDelete ="UPDATE HOADON SET TrangThai = N'Hủy' WHERE MaHoaDon = " + idHD;
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)){
+            int kq = ps.executeUpdate();
             if (kq > 0) {
                 return true;
             }
@@ -260,7 +314,7 @@ public class QLhoaDon_repository {
     }
 
     public boolean updateTrangThaiHD(int idHD) {
-        String sql = "UPDATE HOADON SET TrangThai = 1 WHERE MaHoaDon = ?";
+        String sql = "UPDATE HOADON SET TrangThai = N'Đã thanh toán' WHERE MaHoaDon = ?";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idHD);
             int kq = ps.executeUpdate();

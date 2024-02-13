@@ -37,6 +37,10 @@ public class HoaDon_service {
     public ArrayList<SanPhamModel_view> getListSP() {
         return d.getSP();
     }
+    
+    public ArrayList<SanPhamModel_view> getListSPbyID(int id) {
+        return d.getSPbyID(id);
+    }
 
     public String addHD(HoaDon_entity hd) {
         boolean check = d.addHD(hd);
@@ -53,6 +57,15 @@ public class HoaDon_service {
             return "Cập nhập hóa đơn thành công";
         } else {
             return "Cập nhập hóa đơn thất bại";
+        }
+    }
+    
+    public String huyHD(int id) {
+        boolean check = d.huyHD(id);
+        if (check) {
+            return "Hủy hóa đơn thành công";
+        } else {
+            return "Hủy hóa đơn thất bại";
         }
     }
 

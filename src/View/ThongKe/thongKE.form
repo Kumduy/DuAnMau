@@ -24,24 +24,31 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="sortByDay" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="soDonHangDaBan" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="ThongKeTheoNgay" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="ThongKeTheoThang" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="ThongKeTheoNam" min="-2" pref="200" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="soDonHangDaBan" min="-2" pref="200" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="ThongKeTheoNgay" min="-2" pref="200" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="ThongKeTheoThang" min="-2" pref="200" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="ThongKeTheoNam" min="-2" pref="200" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="sortByDay" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                              <Component id="jLabel15" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabel32" min="-2" pref="150" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
+                  <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -56,8 +63,14 @@
                   <Component id="ThongKeTheoNgay" alignment="0" pref="122" max="32767" attributes="0"/>
                   <Component id="ThongKeTheoThang" alignment="0" pref="122" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="32767" attributes="0"/>
-              <Component id="sortByDay" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="61" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="sortByDay" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jTabbedPane1" min="-2" pref="270" max="-2" attributes="0"/>
           </Group>
@@ -309,30 +322,37 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel19" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel19" pref="37" max="32767" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jLabel20" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="jLabel20" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel29" pref="188" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jLabel15" pref="177" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -341,8 +361,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
@@ -362,7 +383,7 @@
                       <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -373,14 +394,6 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/View/HomePage/Icon/icons8-money-24.png"/>
             </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel15">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="T&#x1ed5;ng doanh thu / th&#xe1;ng"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel19">
@@ -409,6 +422,14 @@
         <Component class="javax.swing.JLabel" name="jLabel20">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel29">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="T&#x1ed5;ng doanh thu / th&#xe1;ng"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -635,10 +656,32 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
-                        <Column editable="true" title="S&#x1ed1; &#x111;&#x1a1;n h&#xe0;ng &#x111;&#xe3; b&#xe1;n" type="java.lang.Object"/>
-                        <Column editable="true" title="S&#x1ed1; ti&#x1ec1;n b&#xe1;n &#x111;&#x1b0;&#x1ee3;c" type="java.lang.Object"/>
+                        <Column editable="true" title="M&#xe3; " type="java.lang.Object"/>
                         <Column editable="true" title="Doanh thu" type="java.lang.Object"/>
+                        <Column editable="true" title="Th&#x1edd;i gian" type="java.lang.Object"/>
                       </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -697,5 +740,21 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel15">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="T&#x1ed5;ng doanh thu  : 0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel32">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="T&#x1ed5;ng &#x111;&#x1a1;n &#x111;&#xe3; b&#xe1;n  : 0"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
