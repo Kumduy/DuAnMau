@@ -19,7 +19,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import service.HoaDon_service;
 import entity.User_entity;
 /**
  *
@@ -492,6 +491,9 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap())
             .addComponent(color1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        color1.getAccessibleContext().setAccessibleName("color1\n");
+        color2.getAccessibleContext().setAccessibleName("color2\n");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

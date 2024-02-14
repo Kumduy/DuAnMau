@@ -95,6 +95,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
         <Container class="View.HomePage.color" name="color1">
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="color1&#xa;"/>
+          </AccessibilityProperties>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -551,6 +554,9 @@
           </SubComponents>
         </Container>
         <Container class="View.HomePage.color" name="color2">
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="color2&#xa;"/>
+          </AccessibilityProperties>
 
           <Layout>
             <DimensionLayout dim="0">
