@@ -20,6 +20,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import entity.User_entity;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author DELL
@@ -41,14 +45,34 @@ public class HomePage extends javax.swing.JFrame {
         upImage(Icon5);
         upImage(Icon6);
     }
+
     
+    class JPanelGradient extends JPanel {
+
+        @Override
+        public void setOpaque(boolean isOpaque) {
+            isOpaque = false;
+            super.setOpaque(isOpaque);
+        }
+        
+        protected void paintComponent(Graphics g) {
+            int height;
+            int width;
+            Graphics2D g2d = (Graphics2D) g;
+            GradientPaint gra = new GradientPaint(getWidth(), getHeight(), Color.decode("#1D976C"), 0, 0, Color.decode("#99f2c8"));
+            g2d.setPaint(gra);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+        }
+    }
+    
+
     public static User_entity u;
 
     public void mouseEnter(JPanel jp) {
         jp.setOpaque(true);
         jp.setBackground(new Color(7, 164, 121));
         jp.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
     }
 
     public void mouseout(JPanel jp) {
@@ -69,9 +93,9 @@ public class HomePage extends javax.swing.JFrame {
         mainPanel.removeAll();
         mainPanel.add(com);
         SwingUtilities.invokeLater(() -> {
-        mainPanel.repaint();
-        mainPanel.revalidate();
-    });
+            mainPanel.repaint();
+            mainPanel.revalidate();
+        });
     }
 
     /**
@@ -85,8 +109,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         bg = new javax.swing.JPanel();
-        mainPanel = new javax.swing.JPanel();
-        color1 = new View.HomePage.color();
+        Menu = new JPanelGradient();
         titlePanel = new javax.swing.JPanel();
         Icon = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -109,8 +132,9 @@ public class HomePage extends javax.swing.JFrame {
         titlePanel6 = new javax.swing.JPanel();
         Icon6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        color2 = new View.HomePage.color();
+        Header = new JPanelGradient();
         jLabel1 = new javax.swing.JLabel();
+        mainPanel = new javax.swing.JPanel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -121,9 +145,7 @@ public class HomePage extends javax.swing.JFrame {
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
 
-        mainPanel.setBackground(new java.awt.Color(0, 0, 0));
-        mainPanel.setOpaque(false);
-        mainPanel.setLayout(new java.awt.BorderLayout());
+        Menu.setOpaque(false);
 
         titlePanel.setOpaque(false);
 
@@ -152,7 +174,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(titlePanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Icon, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addComponent(Icon, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(titlePanelLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
@@ -277,7 +299,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(Icon3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         titlePanel3Layout.setVerticalGroup(
             titlePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,24 +435,24 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout color1Layout = new javax.swing.GroupLayout(color1);
-        color1.setLayout(color1Layout);
-        color1Layout.setHorizontalGroup(
-            color1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titlePanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-            .addComponent(titlePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-            .addGroup(color1Layout.createSequentialGroup()
+        javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
+        Menu.setLayout(MenuLayout);
+        MenuLayout.setHorizontalGroup(
+            MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(titlePanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+            .addComponent(titlePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+            .addGroup(MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(titlePanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(titlePanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-            .addComponent(titlePanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-            .addComponent(titlePanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+            .addComponent(titlePanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+            .addComponent(titlePanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+            .addComponent(titlePanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
         );
-        color1Layout.setVerticalGroup(
-            color1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(color1Layout.createSequentialGroup()
+        MenuLayout.setVerticalGroup(
+            MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
@@ -445,63 +467,66 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(titlePanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(titlePanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
+
+        Header.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cửa hàng bán giày");
 
-        javax.swing.GroupLayout color2Layout = new javax.swing.GroupLayout(color2);
-        color2.setLayout(color2Layout);
-        color2Layout.setHorizontalGroup(
-            color2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(color2Layout.createSequentialGroup()
+        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
+        Header.setLayout(HeaderLayout);
+        HeaderLayout.setHorizontalGroup(
+            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HeaderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1079, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        color2Layout.setVerticalGroup(
-            color2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, color2Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+        HeaderLayout.setVerticalGroup(
+            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HeaderLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        mainPanel.setBackground(new java.awt.Color(0, 0, 0));
+        mainPanel.setOpaque(false);
+        mainPanel.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addComponent(color1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(color2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Menu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(bgLayout.createSequentialGroup()
-                .addComponent(color2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(color1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        color1.getAccessibleContext().setAccessibleName("color1\n");
-        color2.getAccessibleContext().setAccessibleName("color2\n");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 1264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 1276, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,82 +536,82 @@ public class HomePage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void titlePanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel6MouseExited
-        mouseout(titlePanel6);
-    }//GEN-LAST:event_titlePanel6MouseExited
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
 
-    private void titlePanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel6MouseEntered
-        mouseEnter(titlePanel6);
-    }//GEN-LAST:event_titlePanel6MouseEntered
-
-    private void titlePanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel6MouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_titlePanel6MouseClicked
-
-    private void titlePanel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseExited
-        mouseout(titlePanel5);        // TODO add your handling code here:
-    }//GEN-LAST:event_titlePanel5MouseExited
-
-    private void titlePanel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseEntered
-        mouseEnter(titlePanel5);
-    }//GEN-LAST:event_titlePanel5MouseEntered
-
-    private void titlePanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseClicked
-        setMainPanel(new HoaDon_view());
-        
-    }//GEN-LAST:event_titlePanel5MouseClicked
-
-    private void titlePanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseExited
-        mouseout(titlePanel4);
-    }//GEN-LAST:event_titlePanel4MouseExited
-
-    private void titlePanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseEntered
-        mouseEnter(titlePanel4);
-    }//GEN-LAST:event_titlePanel4MouseEntered
-
-    private void titlePanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseClicked
-        setMainPanel(new QLTK_view());
-    }//GEN-LAST:event_titlePanel4MouseClicked
-
-    private void titlePanel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel3MouseExited
-        mouseout(titlePanel3);
-    }//GEN-LAST:event_titlePanel3MouseExited
-
-    private void titlePanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel3MouseEntered
-        mouseEnter(titlePanel3);
-    }//GEN-LAST:event_titlePanel3MouseEntered
-
-    private void titlePanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel3MouseClicked
-        setMainPanel(new khachHang_view());
-    }//GEN-LAST:event_titlePanel3MouseClicked
-
-    private void titlePanel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel2MouseExited
-        mouseout(titlePanel2);
-    }//GEN-LAST:event_titlePanel2MouseExited
-
-    private void titlePanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel2MouseEntered
-        mouseEnter(titlePanel2);
-    }//GEN-LAST:event_titlePanel2MouseEntered
-
-    private void titlePanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel2MouseClicked
-        setMainPanel(new QLSanPham_view());
-    }//GEN-LAST:event_titlePanel2MouseClicked
-
-    private void titlePanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel1MouseExited
-        mouseout(titlePanel1);
-    }//GEN-LAST:event_titlePanel1MouseExited
-
-    private void titlePanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel1MouseEntered
-        mouseEnter(titlePanel1);
-    }//GEN-LAST:event_titlePanel1MouseEntered
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     private void titlePanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel1MouseClicked
         setMainPanel(new thongKE());
     }//GEN-LAST:event_titlePanel1MouseClicked
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void titlePanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel1MouseEntered
+        mouseEnter(titlePanel1);
+    }//GEN-LAST:event_titlePanel1MouseEntered
 
-    }//GEN-LAST:event_jLabel2MouseClicked
+    private void titlePanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel1MouseExited
+        mouseout(titlePanel1);
+    }//GEN-LAST:event_titlePanel1MouseExited
+
+    private void titlePanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel2MouseClicked
+        setMainPanel(new QLSanPham_view());
+    }//GEN-LAST:event_titlePanel2MouseClicked
+
+    private void titlePanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel2MouseEntered
+        mouseEnter(titlePanel2);
+    }//GEN-LAST:event_titlePanel2MouseEntered
+
+    private void titlePanel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel2MouseExited
+        mouseout(titlePanel2);
+    }//GEN-LAST:event_titlePanel2MouseExited
+
+    private void titlePanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel3MouseClicked
+        setMainPanel(new khachHang_view());
+    }//GEN-LAST:event_titlePanel3MouseClicked
+
+    private void titlePanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel3MouseEntered
+        mouseEnter(titlePanel3);
+    }//GEN-LAST:event_titlePanel3MouseEntered
+
+    private void titlePanel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel3MouseExited
+        mouseout(titlePanel3);
+    }//GEN-LAST:event_titlePanel3MouseExited
+
+    private void titlePanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseClicked
+        setMainPanel(new QLTK_view());
+    }//GEN-LAST:event_titlePanel4MouseClicked
+
+    private void titlePanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseEntered
+        mouseEnter(titlePanel4);
+    }//GEN-LAST:event_titlePanel4MouseEntered
+
+    private void titlePanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel4MouseExited
+        mouseout(titlePanel4);
+    }//GEN-LAST:event_titlePanel4MouseExited
+
+    private void titlePanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseClicked
+        setMainPanel(new HoaDon_view());
+
+    }//GEN-LAST:event_titlePanel5MouseClicked
+
+    private void titlePanel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseEntered
+        mouseEnter(titlePanel5);
+    }//GEN-LAST:event_titlePanel5MouseEntered
+
+    private void titlePanel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel5MouseExited
+        mouseout(titlePanel5);        // TODO add your handling code here:
+    }//GEN-LAST:event_titlePanel5MouseExited
+
+    private void titlePanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel6MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_titlePanel6MouseClicked
+
+    private void titlePanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel6MouseEntered
+        mouseEnter(titlePanel6);
+    }//GEN-LAST:event_titlePanel6MouseEntered
+
+    private void titlePanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanel6MouseExited
+        mouseout(titlePanel6);
+    }//GEN-LAST:event_titlePanel6MouseExited
 
     /**
      * @param args the command line arguments
@@ -614,6 +639,9 @@ public class HomePage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -624,6 +652,7 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Header;
     private javax.swing.JLabel Icon;
     private javax.swing.JLabel Icon1;
     private javax.swing.JLabel Icon2;
@@ -631,9 +660,8 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel Icon4;
     private javax.swing.JLabel Icon5;
     private javax.swing.JLabel Icon6;
+    private javax.swing.JPanel Menu;
     private javax.swing.JPanel bg;
-    private View.HomePage.color color1;
-    private View.HomePage.color color2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

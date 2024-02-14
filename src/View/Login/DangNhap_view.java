@@ -10,7 +10,11 @@ import java.awt.Label;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import entity.User_entity;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import service.Login_service;
 
 /*
@@ -32,6 +36,24 @@ public class DangNhap_view extends javax.swing.JFrame {
         upImage();
     }
 
+    class JPanelGradient extends JPanel {
+
+        @Override
+        public void setOpaque(boolean isOpaque) {
+            isOpaque = false;
+            super.setOpaque(isOpaque);
+        }
+        
+        protected void paintComponent(Graphics g) {
+            int height;
+            int width;
+            Graphics2D g2d = (Graphics2D) g;
+            GradientPaint gra = new GradientPaint(getWidth(), getHeight(), Color.decode("#1D976C"), 0, 0, Color.decode("#99f2c8"));
+            g2d.setPaint(gra);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+        }
+    }
+    
     Login_service login_service = new Login_service();
 
     public final void upImage() {
@@ -74,7 +96,7 @@ public class DangNhap_view extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         panelBtn = new javax.swing.JPanel();
         btnLogin = new javax.swing.JLabel();
-        panelCover1 = new View.Login.PanelCover();
+        jPanel1 = new JPanelGradient();
         ImageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -143,16 +165,16 @@ public class DangNhap_view extends javax.swing.JFrame {
 
         ImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Login/Icon/sneaker-icon-11 (2).jpg"))); // NOI18N
 
-        javax.swing.GroupLayout panelCover1Layout = new javax.swing.GroupLayout(panelCover1);
-        panelCover1.setLayout(panelCover1Layout);
-        panelCover1Layout.setHorizontalGroup(
-            panelCover1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCover1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 318, Short.MAX_VALUE))
         );
-        panelCover1Layout.setVerticalGroup(
-            panelCover1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ImageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
@@ -182,12 +204,11 @@ public class DangNhap_view extends javax.swing.JFrame {
                         .addGap(92, 92, 92)
                         .addComponent(panelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelCover1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(192, 192, 192))
         );
         backGroundLayout.setVerticalGroup(
             backGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCover1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backGroundLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
@@ -208,6 +229,7 @@ public class DangNhap_view extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(panelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(63, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,6 +296,9 @@ public class DangNhap_view extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DangNhap_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -292,10 +317,10 @@ public class DangNhap_view extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel panelBtn;
-    private View.Login.PanelCover panelCover1;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
