@@ -10,7 +10,7 @@ import entity.User_entity;
  *
  * @author DELL
  */
-public class Login_service {
+public class QLTK_service {
     QLTK_repository login_repository = new QLTK_repository();
     
     public Boolean check(String tenTK,String matKhau){

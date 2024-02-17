@@ -8,9 +8,15 @@ import entity.ThongKe_DoanhThu_Model;
 import entity.ThongKe_SanPham_model;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
-import service.QuanLyTaiKhoan;
+import service.QuanLyThongKe_service;
 
 /**
  *
@@ -18,18 +24,16 @@ import service.QuanLyTaiKhoan;
  */
 public class thongKE extends javax.swing.JPanel {
 
-    QuanLyTaiKhoan qlService = new QuanLyTaiKhoan();
-    
+    QuanLyThongKe_service qlService = new QuanLyThongKe_service();
+
     public thongKE() {
         initComponents();
         LoadData_SanPham(qlService.getList_ThongKeSanPham());
         LoadData_DoanhThu(qlService.getList_ThongKeDoanhThu());
-        tongDonHang(qlService.getList_ThongKeDoanhThu());
-        trangThai(qlService.getList_ThongKeDoanhThu());
+        trangThai();
     }
-    
 
-      public void LoadData_SanPham(ArrayList<ThongKe_SanPham_model> tkSanPham) {
+    public void LoadData_SanPham(ArrayList<ThongKe_SanPham_model> tkSanPham) {
         DefaultTableModel model = (DefaultTableModel) tbl_SanPham.getModel();
         model.setRowCount(0);
         for (ThongKe_SanPham_model tksp : tkSanPham) {
@@ -58,36 +62,47 @@ public class thongKE extends javax.swing.JPanel {
         }
     }
 
-    public void tongDonHang( ArrayList<ThongKe_DoanhThu_Model> tkdt) {
+    public void tongDoanhThu(ArrayList<ThongKe_DoanhThu_Model> tkdt, JLabel lbl) {
         double tongDoanhThu = 0;
-        int tongDonHoang = tkdt.size();
-        lbl_DonHang1.setText( tongDonHoang + " đơn hàng");
         for (ThongKe_DoanhThu_Model tk : tkdt) {
             tongDoanhThu = tongDoanhThu + tk.getTongTien();
         }
-         
-         lbl_TongDoanhThu1.setText(tongDoanhThu+"VND");
-         lbl_TongDoanhThu2.setText(tongDoanhThu+"VND");
-         lbl_TongDoanhThu3.setText(tongDoanhThu+"VND");
+        lbl.setText(tongDoanhThu + "VND");
 
     }
-    
-    public void trangThai(ArrayList<ThongKe_DoanhThu_Model> tkdt){
-        int thanhCong = qlService.getList_DoanhThuThanhCong();
-        int thatBai = qlService.getList_DoanhThuThatBai();
-        lbl_ThanhCong.setText(""+ thanhCong);
-        lbl_ThanhCong1.setText(""+ thanhCong);
-        lbl_ThanhCong2.setText(""+thatBai);
-        lbl_ThanhCong3.setText(""+thatBai);
-        lbl_ThatBai.setText(""+thatBai);
-        lbl_ThatBai1.setText(""+thatBai);
-        lbl_ThatBai2.setText(""+thatBai);
-        lbl_ThatBai3.setText(""+thatBai);
+
+    public void trangThai() {
+        lbl_DonHang1.setText(qlService.getList_ThongKeDoanhThu().size() + " đơn hàng");
+        lbl_ThanhCong.setText("" + qlService.getList_DoanhThuThanhCong());
+        lbl_ThatBai.setText("" + qlService.getList_DoanhThuThatBai());
+
+        LocalDate ngayHienTai = LocalDate.now();
+        java.sql.Date begin = java.sql.Date.valueOf(ngayHienTai.atStartOfDay().toLocalDate());
+        java.sql.Date end = java.sql.Date.valueOf(ngayHienTai.atTime(23, 59, 59).toLocalDate());
+
+        lbl_ThanhCong1.setText("" + qlService.getList_DoanhThuThanhCongbyTime(begin, end));
+        lbl_ThatBai1.setText("" + qlService.getList_DoanhThuThatBaibyTime(begin, end));
+        tongDoanhThu(qlService.getList_DoanhThuByThoiGian(begin, end), lbl_TongDoanhThu1);
+
+        LocalDate ngayBatDau = LocalDate.now().withDayOfMonth(1);
+        LocalDate ngayKetThuc = YearMonth.now().atEndOfMonth();
+        java.sql.Date beginMonth = java.sql.Date.valueOf(ngayBatDau);
+        java.sql.Date endMonth = java.sql.Date.valueOf(ngayKetThuc);
         
-        
+        lbl_ThanhCong2.setText("" + qlService.getList_DoanhThuThanhCongbyTime(beginMonth, endMonth));
+        lbl_ThatBai2.setText("" + qlService.getList_DoanhThuThatBaibyTime(beginMonth, endMonth));
+        tongDoanhThu(qlService.getList_DoanhThuByThoiGian(beginMonth, endMonth), lbl_TongDoanhThu2);
+
+        LocalDate ngayBatDau1 = LocalDate.now().withDayOfYear(1);
+        LocalDate ngayKetThuc1 = LocalDate.now().withDayOfYear(365);
+        java.sql.Date beginYear = java.sql.Date.valueOf(ngayBatDau1);
+        java.sql.Date endYear = java.sql.Date.valueOf(ngayKetThuc1);
+
+        lbl_ThanhCong3.setText("" + qlService.getList_DoanhThuThanhCongbyTime(beginYear, endYear));
+        lbl_ThatBai3.setText("" + qlService.getList_DoanhThuThatBaibyTime(beginYear, endYear));
+        tongDoanhThu(qlService.getList_DoanhThuByThoiGian(beginYear, endYear), lbl_TongDoanhThu3);
     }
-    
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -529,7 +544,6 @@ public class thongKE extends javax.swing.JPanel {
         java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
         ArrayList<ThongKe_DoanhThu_Model> ls = qlService.getList_DoanhThuByThoiGian(sqlDate1, sqlDate2);
         LoadData_DoanhThu(ls);
-        tongDonHang(ls);
     }//GEN-LAST:event_btn_TimKiem3MouseClicked
 
 

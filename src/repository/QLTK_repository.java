@@ -8,11 +8,13 @@ import entity.HoaDon_entity;
 import java.util.ArrayList;
 import java.sql.*;
 import entity.User_entity;
+
 /**
  *
  * @author DELL
  */
 public class QLTK_repository {
+
     DbConnection dbconnection = new DbConnection();
 
     public ArrayList<User_entity> getTK(String tenTK, String matKhau) {
@@ -23,14 +25,14 @@ public class QLTK_repository {
             ps.setString(2, matKhau);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User_entity u = new User_entity(rs.getString("TenDangNhap")
-                        , rs.getString("MatKhau")
-                        , rs.getString("TenNguoiDung")
-                        , rs.getString("SDT")
-                        , rs.getBoolean("VaiTro")? "Quản lý":"Nhân viên"
-                        , rs.getBoolean("GioiTinh")? "Nam":"Nữ"
-                        , rs.getInt("MaNguoiDung")
-                        , rs.getInt("MaTaiKhoan"));
+                User_entity u = new User_entity(rs.getString("TenDangNhap"),
+                         rs.getString("MatKhau"),
+                         rs.getString("TenNguoiDung"),
+                         rs.getString("SDT"),
+                         rs.getBoolean("VaiTro") ? "Quản lý" : "Nhân viên",
+                         rs.getBoolean("GioiTinh") ? "Nam" : "Nữ",
+                         rs.getInt("MaNguoiDung"),
+                         rs.getInt("MaTaiKhoan"));
                 ls.add(u);
             }
         } catch (Exception e) {
@@ -38,6 +40,5 @@ public class QLTK_repository {
         }
         return ls;
     }
-    
-    
+
 }

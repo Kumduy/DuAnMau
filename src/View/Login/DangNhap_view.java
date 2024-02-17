@@ -1,21 +1,19 @@
 package View.Login;
 
 import View.HomePage.HomePage;
-import java.awt.BorderLayout;
+import View.QLTaiKhoan.QLTK_view;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
 import java.awt.Image;
-import java.awt.Label;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import entity.User_entity;
+
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import service.Login_service;
+import service.QLTK_service;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -54,7 +52,7 @@ public class DangNhap_view extends javax.swing.JFrame {
         }
     }
     
-    Login_service login_service = new Login_service();
+    QLTK_service login_service = new QLTK_service();
 
     public final void upImage() {
         Icon icon = ImageLabel.getIcon();
@@ -70,6 +68,7 @@ public class DangNhap_view extends javax.swing.JFrame {
             HomePage homePage = new HomePage();
             homePage.setVisible(true);
             homePage.u = login_service.getUser(txtUserName.getText(), txtPassword.getText());
+            QLTK_view.u =login_service.getUser(txtUserName.getText(), txtPassword.getText());
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản");

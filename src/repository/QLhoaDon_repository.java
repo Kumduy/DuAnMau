@@ -81,7 +81,8 @@ public class QLhoaDon_repository {
     }
 
     public ArrayList<HDCTmodel_entity> getHDCTList(int maHD) {
-        String sql = "select HOADONCHITIET.MaHoaDon,HOADONCHITIET.MaHoaDonChiTiet,HOADONCHITIET.SoLuong,HOADONCHITIET.MaSanPham,SanPham.TenSanPham,CHITIETSANPHAM.GiaBan,HOADONCHITIET.SoLuong,CHITIETSANPHAM.TrangThai from HOADONCHITIET inner join (SANPHAM inner join CHITIETSANPHAM on SANPHAM.MaSanPham = CHITIETSANPHAM.SanPham) on HOADONCHITIET.MaSanPham = SANPHAM.MaSanPham where MaHoaDon = " + maHD;
+        String sql = "select HOADONCHITIET.MaHoaDon,HOADONCHITIET.MaHoaDonChiTiet,HOADONCHITIET.SoLuong,HOADONCHITIET.MaSanPham,SanPham.TenSanPham,CHITIETSANPHAM.GiaBan,HOADONCHITIET.SoLuong,CHITIETSANPHAM.TrangThai from HOADONCHITIET inner join (SANPHAM inner join CHITIETSANPHAM on SANPHAM.MaSanPham = CHITIETSANPHAM.SanPham) on HOADONCHITIET.MaSanPham = SANPHAM.MaSanPham \n "
+                + "where HOADONCHITIET.MaHoaDonChiTiet NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'HOADONCHITIET') AND MaHoaDon = " + maHD;
         ArrayList<HDCTmodel_entity> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -120,7 +121,8 @@ public class QLhoaDon_repository {
                 + "INNER JOIN \n"
                 + "    SIZE ON CHITIETSANPHAM.MaSize = SIZE.MaSize\n"
                 + "INNER JOIN \n"
-                + "    DANHMUC ON SANPHAM.MaDanhMuc = DANHMUC.MaDanhMuc;";
+                + "    DANHMUC ON SANPHAM.MaDanhMuc = DANHMUC.MaDanhMuc\n"
+                + "WHERE SANPHAM.MaSanPham NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'SANPHAM');";
         ArrayList<SanPhamModel_view> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -161,7 +163,7 @@ public class QLhoaDon_repository {
                 + "    SIZE ON CHITIETSANPHAM.MaSize = SIZE.MaSize\n"
                 + "INNER JOIN \n"
                 + "    DANHMUC ON SANPHAM.MaDanhMuc = DANHMUC.MaDanhMuc\n"
-                + "WHERE MaSanPham = " + id ;
+                + "WHERE SANPHAM.MaSanPham NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'SANPHAM') AND MaSanPham = " + id ;
         ArrayList<SanPhamModel_view> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -201,7 +203,8 @@ public class QLhoaDon_repository {
     }
 
     public boolean capNhapTongTien(int idHD) {
-        String sql = "select HOADONCHITIET.MaHoaDon,HOADONCHITIET.MaHoaDonChiTiet,HOADONCHITIET.SoLuong,HOADONCHITIET.MaSanPham,SanPham.TenSanPham,CHITIETSANPHAM.GiaBan,HOADONCHITIET.SoLuong,CHITIETSANPHAM.TrangThai from HOADONCHITIET inner join (SANPHAM inner join CHITIETSANPHAM on SANPHAM.MaSanPham = CHITIETSANPHAM.SanPham) on HOADONCHITIET.MaSanPham = SANPHAM.MaSanPham where MaHoaDon = " + idHD;
+        String sql = "select HOADONCHITIET.MaHoaDon,HOADONCHITIET.MaHoaDonChiTiet,HOADONCHITIET.SoLuong,HOADONCHITIET.MaSanPham,SanPham.TenSanPham,CHITIETSANPHAM.GiaBan,HOADONCHITIET.SoLuong,CHITIETSANPHAM.TrangThai from HOADONCHITIET inner join (SANPHAM inner join CHITIETSANPHAM on SANPHAM.MaSanPham = CHITIETSANPHAM.SanPham) on HOADONCHITIET.MaSanPham = SANPHAM.MaSanPham \n"
+                + "where HOADONCHITIET.MaHoaDonChiTiet NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'HOADONCHITIET') AND MaHoaDon = " + idHD;
         double tongTien = 0;
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -236,9 +239,10 @@ public class QLhoaDon_repository {
         return false;
     }
     
-    public boolean xoaHDCT(int idHDCT,int idHD){
-        String sqlDelete ="DELETE HOADONCHITIET where MaHoaDonChiTiet = " + idHDCT;
+    public boolean xoaHDCT(int idHDCT){
+        String sqlDelete ="INSERT INTO deleted_records (record_id,table_name) VALUES(?,'HOADONCHITIET')";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)){
+            ps.setInt(1, idHDCT);
             int kq = ps.executeUpdate();
             if (kq > 0) {
                 return true;
@@ -250,7 +254,7 @@ public class QLhoaDon_repository {
     }
 
     public boolean themSanPhamVaoHoaDonChiTiet(int idHD, int idSP, int soLuongMua, double giaban) {
-        String sqlSelect = "SELECT * FROM HOADONCHITIET WHERE MaHoaDon = ? AND MaSanPham = ?";
+        String sqlSelect = "SELECT * FROM HOADONCHITIET WHERE MaHoaDon = ? AND MaSanPham = ? AND HOADONCHITIET.MaHoaDonChiTiet NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'HOADONCHITIET')";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlSelect)) {
             ps.setInt(1, idHD);
             ps.setInt(2, idSP);

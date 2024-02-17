@@ -79,7 +79,7 @@ public class HoaDon_service {
     }
     
     public String xoaHDCT(int idHDCT,int idHD){
-        boolean check = d.xoaHDCT(idHDCT,idHD);
+        boolean check = d.xoaHDCT(idHDCT);
         if (check) {
             boolean check2 = d.capNhapTongTien(idHD);
             if (check2) {
