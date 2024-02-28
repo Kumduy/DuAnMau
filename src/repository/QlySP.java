@@ -169,7 +169,7 @@ public class QlySP {
 
             if (kqSanPham > 0) {
                 psChiTietSanPham.setString(1, sp.getTenSP());
-                psChiTietSanPham.setInt(2,  (int) sp.getSize());
+                psChiTietSanPham.setInt(2, (int) sp.getSize());
                 psChiTietSanPham.setInt(3, Integer.parseInt(sp.getMauSac()));
                 psChiTietSanPham.setInt(4, sp.getMaSP());
                 psChiTietSanPham.setBoolean(5, sp.isTrangThai());
@@ -188,11 +188,11 @@ public class QlySP {
         return false;
     }
 
-    public ArrayList<Thuoctinh> getList(String thuocTinh) {
-        ArrayList list = new ArrayList();
-        String sql = "SELECT * FROM " + thuocTinh;
+   public ArrayList<Thuoctinh> getList(String thuocTinh, String tenCot) {
+        ArrayList<Thuoctinh> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + thuocTinh + " WHERE " + tenCot + " NOT IN (SELECT record_id FROM deleted_records WHERE table_name = ?)";
         try (Connection conn = connection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            ps.setString(1, thuocTinh);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Thuoctinh lh = new Thuoctinh();

@@ -6,17 +6,24 @@ package entity;
 
 import java.util.Date;
 
-
-
 /**
  *
  * @author ADMIN
  */
 public class ThongKe_DoanhThu_Model {
+
     private int maHoaDon;
     private double tongTien;
-     private Date ngayTaoHoaDon;
-     public String trangThai;
+    private Date ngayTaoHoaDon;
+    private String khachHang;
+
+    public String getKhachHang() {
+        return khachHang;
+    }
+
+    public void setKhachHang(String khachHang) {
+        this.khachHang = khachHang;
+    }
 
     public ThongKe_DoanhThu_Model() {
     }
@@ -27,7 +34,6 @@ public class ThongKe_DoanhThu_Model {
         this.ngayTaoHoaDon = ngayTaoHoaDon;
     }
 
-    
     public int getMaHoaDon() {
         return maHoaDon;
     }
@@ -52,15 +58,5 @@ public class ThongKe_DoanhThu_Model {
         this.ngayTaoHoaDon = ngayTaoHoaDon;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
 
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    
-   
-    
 }

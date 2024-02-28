@@ -5,9 +5,12 @@
 package service;
 
 import java.util.ArrayList;
+import entity.KhachHangModel;
 import repository.QLhoaDon_repository;
+import repository.KhachHang_repository;
 import entity.HoaDon_entity;
 import entity.HDCTmodel_entity;
+import entity.HoaDonModel;
 import entity.SanPhamModel_view;
 
 /**
@@ -16,9 +19,19 @@ import entity.SanPhamModel_view;
  */
 public class HoaDon_service {
 
+    KhachHang_repository k = new KhachHang_repository();
+
     QLhoaDon_repository d = new QLhoaDon_repository();
 
-    public ArrayList<HoaDon_entity> getListHD() {
+    public ArrayList<KhachHangModel> getKhachHangBySDT(String SDT) {
+        return k.getList_KhachHangBySDT(SDT);
+    }
+
+    public ArrayList<KhachHangModel> getKhachHangByName(String name) {
+        return k.getList_KhachHangByName(name);
+    }
+
+    public ArrayList<HoaDonModel> getListHD() {
         return d.getList();
     }
 
@@ -26,7 +39,7 @@ public class HoaDon_service {
         return d.getHDbyID(id);
     }
 
-    public ArrayList<HoaDon_entity> getListHDbyTT(boolean trangThai) {
+    public ArrayList<HoaDonModel> getListHDbyTT(String trangThai) {
         return d.getHDbyTT(trangThai);
     }
 
@@ -37,7 +50,7 @@ public class HoaDon_service {
     public ArrayList<SanPhamModel_view> getListSP() {
         return d.getSP();
     }
-    
+
     public ArrayList<SanPhamModel_view> getListSPbyID(int id) {
         return d.getSPbyID(id);
     }
@@ -52,20 +65,28 @@ public class HoaDon_service {
     }
 
     public String updateHD(HoaDon_entity hd) {
-        boolean check = d.updateHD(hd);
-        if (check) {
-            return "Cập nhập hóa đơn thành công";
+        if (hd.getTrangThai().equals("Đã thanh toán")) {
+            return "Sản phẩm này đã được thanh toán";
         } else {
-            return "Cập nhập hóa đơn thất bại";
+            boolean check = d.updateHD(hd);
+            if (check) {
+                return "Cập nhập hóa đơn thành công";
+            } else {
+                return "Cập nhập hóa đơn thất bại";
+            }
         }
     }
-    
+
     public String huyHD(int id) {
-        boolean check = d.huyHD(id);
-        if (check) {
-            return "Hủy hóa đơn thành công";
+        if (d.getHDbyID(id).get(0).getTrangThai().equals("Đã thanh toán")) {
+            return "Sản phẩm này đã được thanh toán không thể hủy";
         } else {
-            return "Hủy hóa đơn thất bại";
+            boolean check = d.huyHD(id);
+            if (check) {
+                return "Hủy hóa đơn thành công";
+            } else {
+                return "Hủy hóa đơn thất bại";
+            }
         }
     }
 
@@ -77,8 +98,8 @@ public class HoaDon_service {
             return "Cập nhập số lượng thất bại";
         }
     }
-    
-    public String xoaHDCT(int idHDCT,int idHD){
+
+    public String xoaHDCT(int idHDCT, int idHD) {
         boolean check = d.xoaHDCT(idHDCT);
         if (check) {
             boolean check2 = d.capNhapTongTien(idHD);
@@ -92,29 +113,45 @@ public class HoaDon_service {
         }
     }
 
-    public String themSanPhamVaoHoaDonChiTiet(int idHD, int idSP, int soLuongMua, double giaban) {
-        boolean check = d.themSanPhamVaoHoaDonChiTiet(idHD, idSP, soLuongMua, giaban);
-        if (check) {
-            boolean check2 = d.capNhapTongTien(idHD);
-            if (check2) {
-                return "Thêm sản phẩm hóa đơn thành công";
-            } else {
-                return "Thêm sản phẩm hóa đơn thất bại";
-            }
-        } else {
-            return "Thêm sản phẩm hóa đơn thất bại";
-        }
-    }
-
-    public String updateTrangThai(String trangThai, int idHD) {
+    public String themSanPhamVaoHoaDonChiTiet(String trangThai, int idHD, int idSP, int soLuongMua, double giaban) {
         if (trangThai.equals("Đã thanh toán")) {
             return "Sản phẩm này đã được thanh toán";
         } else {
-            boolean check = d.updateTrangThaiHD(idHD);
+            boolean check = d.themSanPhamVaoHoaDonChiTiet(idHD, idSP, soLuongMua, giaban);
             if (check) {
-                return "Cập nhập trạng thái hóa đơn thành công";
+                boolean check2 = d.capNhapTongTien(idHD);
+                if (check2) {
+                    return "Thêm sản phẩm hóa đơn thành công";
+                } else {
+                    return "Thêm sản phẩm hóa đơn thất bại";
+                }
             } else {
-                return "Cập nhập trạng thái hóa đơn thất bại";
+                return "Thêm sản phẩm hóa đơn thất bại";
+            }
+        }
+    }
+
+    public ArrayList<String> getTrangThaiList() {
+        return d.getTrangThai();
+    }
+
+    public String updateTrangThai(int idHD, double tien) {
+        if (d.getHDbyID(idHD).get(0).getTrangThai().equals("Đã thanh toán")) {
+            return "Sản phẩm này đã được thanh toán";
+        } else {
+            if (d.getHDbyID(idHD).get(0).getTongTien() == 0) {
+                return "Không có sản phẩm để thanh toán";
+            } else {
+                if (d.getHDbyID(idHD).get(0).getTongTien() > tien) {
+                    return "Vui lòng nhập sô tiền trả phải lớn hơn tổng tiền";
+                } else {
+                    boolean check = d.updateTrangThaiHD(idHD, tien);
+                    if (check) {
+                        return "Cập nhập trạng thái hóa đơn thành công";
+                    } else {
+                        return "Cập nhập trạng thái hóa đơn thất bại";
+                    }
+                }
             }
         }
     }

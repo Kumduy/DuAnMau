@@ -5,7 +5,7 @@
 package repository;
 
 import entity.ThongKe_DoanhThu_Model;
-import entity.ThongKe_SanPham_model;
+import entity.SanPhamModel_view;
 import java.sql.*;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -13,21 +13,23 @@ import java.sql.Date;
  *
  * @author ADMIN
  */
-public class ThongKe_DoanhThu_repository {
+public class ThongKe_repository {
 
     DbConnection Dbconnection = new DbConnection();
 
     public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThu() {
-        String sql = "SELECT MaHoaDon,TongTien,NgayTaoHoaDon\n"
-                + "FROM HOADON WHERE TrangThai = N'Đã Thanh Toán'";
+        String sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "WHERE TrangThai = N'Đã Thanh Toán'";
         ArrayList<ThongKe_DoanhThu_Model> ls = new ArrayList<>();
         try (Connection conn = Dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe_DoanhThu_Model tk = new ThongKe_DoanhThu_Model();
-                tk.setMaHoaDon(rs.getInt(1));
-                tk.setTongTien(rs.getDouble(2));
-                tk.setNgayTaoHoaDon(rs.getDate(3));
+                tk.setMaHoaDon(rs.getInt("MaHoaDon"));
+                tk.setTongTien(rs.getDouble("TongTien"));
+                tk.setNgayTaoHoaDon(rs.getDate("NgayTaoHoaDon"));
+                tk.setKhachHang(rs.getString("TenKhachHang"));
                 ls.add(tk);
             }
         } catch (Exception e) {
@@ -118,7 +120,7 @@ public class ThongKe_DoanhThu_repository {
         return thatBai;
     }
     
-    public ArrayList<ThongKe_SanPham_model> getList_ThongKeSanPham() {
+    public ArrayList<SanPhamModel_view> getList_ThongKeSanPham() {
         String sql = "SELECT SP.MaSanPham,SP.TenSanPham,HDCT.SoLuong,M.MauSac,S.Size,DM.TenDanhMuc,CTSP.GiaBan\n"
                 + "FROM SANPHAM SP\n"
                 + "INNER JOIN DANHMUC DM ON SP.MaDanhMuc = DM.MaDanhMuc\n"
@@ -127,18 +129,18 @@ public class ThongKe_DoanhThu_repository {
                 + "INNER JOIN MAU M ON CTSP.MaMau = M.MaMau\n"
                 + "INNER JOIN HOADONCHITIET HDCT ON SP.MaSanPham = HDCT.MaSanPham\n"
                 + "INNER JOIN HOADON HD ON HDCT.MaHoaDon = HD.MaHoaDon;";
-        ArrayList<ThongKe_SanPham_model> ls = new ArrayList<>();
+        ArrayList<SanPhamModel_view> ls = new ArrayList<SanPhamModel_view>();
         try (Connection conn = Dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ThongKe_SanPham_model tksp = new ThongKe_SanPham_model();
-                tksp.setMaSanPham(rs.getInt(1));
-                tksp.setTenSanPham(rs.getString(2));
+                SanPhamModel_view tksp = new SanPhamModel_view();
+                tksp.setMaSP(rs.getInt(1));
+                tksp.setTenSP(rs.getString(2));
                 tksp.setSoLuong(rs.getInt(3));
                 tksp.setMauSac(rs.getString(4));
                 tksp.setSize(rs.getDouble(5));
-                tksp.setTenDanhMuc(rs.getString(6));
-                tksp.setGiaBan(rs.getDouble(7));
+                tksp.setDanhMuc(rs.getString(6));
+                tksp.setDonGia(rs.getDouble(7));
                 ls.add(tksp);
 
             }

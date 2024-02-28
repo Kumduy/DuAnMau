@@ -24,6 +24,22 @@ public class Validate {
         return true;
     }
     
+        public boolean isPhoneNumber(JTextField txt, String msg, StringBuilder stb) {
+        if (!isEmpty(txt, msg, stb)) {
+            return false;
+        } else {
+            String phone = "\\d{10}";
+            if (txt.getText().trim().matches(phone)) {
+                txt.setBackground(Color.WHITE);
+                return true;
+            } else {
+                txt.setBackground(Color.YELLOW);
+                stb.append(msg).append("\n");
+                return false;
+            }
+        }
+    }
+    
     public boolean isNumber(JTextField txt, String msg, StringBuilder stb, int type) {
         if (!isEmpty(txt, msg, stb)) {
             return false;

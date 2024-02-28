@@ -12,11 +12,13 @@ import java.util.Date;
  */
 public class HoaDonModel {
     private int maHoaDon;
-    private int maKhachHang;
-    private int maNguoiDung;
+    private String khachHang;
+    private String nguoiDung;
     private Date ngayDatHang;
     private double tongTien;
-    private boolean trangThai;
+    private String trangThai;
+    private double tienTra;
+    private double tienThua;
 
     public HoaDonModel() {
     }
@@ -27,6 +29,22 @@ public class HoaDonModel {
         this.tongTien = tongTien;
     }
 
+    public double getTienTra() {
+        return tienTra;
+    }
+
+    public void setTienTra(double tienTra) {
+        this.tienTra = tienTra;
+    }
+
+    public double getTienThua() {
+        return tienThua;
+    }
+
+    public void setTienThua(double tienThua) {
+        this.tienThua = tienThua;
+    }
+
     public int getMaHoaDon() {
         return maHoaDon;
     }
@@ -35,21 +53,23 @@ public class HoaDonModel {
         this.maHoaDon = maHoaDon;
     }
 
-    public int getMaKhachHang() {
-        return maKhachHang;
+    public String getKhachHang() {
+        return khachHang;
     }
 
-    public void setMaKhachHang(int maKhachHang) {
-        this.maKhachHang = maKhachHang;
+    public void setKhachHang(String khachHang) {
+        this.khachHang = khachHang;
     }
 
-    public int getMaNguoiDung() {
-        return maNguoiDung;
+    public String getNguoiDung() {
+        return nguoiDung;
     }
 
-    public void setMaNguoiDung(int maNguoiDung) {
-        this.maNguoiDung = maNguoiDung;
+    public void setNguoiDung(String nguoiDung) {
+        this.nguoiDung = nguoiDung;
     }
+
+
 
     public Date getNgayDatHang() {
         return ngayDatHang;
@@ -67,13 +87,15 @@ public class HoaDonModel {
         this.tongTien = tongTien;
     }
 
-    public boolean isTrangThai() {
+    public String getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(boolean trangThai) {
+    public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
+
+    
 
     
     

@@ -6,14 +6,11 @@ package View.QLTaiKhoan;
 
 import entity.User_entity;
 import java.awt.Color;
-import java.awt.Image;
 import java.util.ArrayList;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import service.QuanLyThongKe_service;
-import validator.Validator;
+import Validate.Validate;
+import service.QLTK_service;
 
 /**
  *
@@ -21,16 +18,20 @@ import validator.Validator;
  */
 public class QLTK_view extends javax.swing.JPanel {
 
-    Validator v = new Validator();
+    Validate v = new Validate();
 
     public QLTK_view() {
         initComponents();
         myInfo(u);
+        loadUser(qltk.getList());
+        LoadData(qltk.getList_TaiKhoan());
     }
-    
+
+    QLTK_service qltk = new QLTK_service();
+
     public static User_entity u;
 
-    public void myInfo(User_entity u){
+    public void myInfo(User_entity u) {
         txt_AccountIDInfo.setText(String.valueOf(u.getMaTaiKhoan()));
         txt_AccountNameInfo.setText(u.getTenNguoiDung());
         txt_GenderInfo.setText(u.getGioiTinh());
@@ -40,12 +41,86 @@ public class QLTK_view extends javax.swing.JPanel {
         txt_PhoneInfo.setText(u.getSDT());
         txt_UserIDInfo.setText(String.valueOf(u.getMaNguoiDung()));
     }
+
+    public void LoadData(ArrayList<User_entity> lsTaiKhoan) {
+        DefaultTableModel model = (DefaultTableModel) tbl_QuanLyTaiKhoan.getModel();
+        model.setRowCount(0);
+        for (User_entity tk : lsTaiKhoan) {
+            model.addRow(new Object[]{
+                tk.getMaNguoiDung(),
+                tk.getTenTK(),
+                tk.getMatKhau(),
+                tk.getSDT(),
+                tk.getGioiTinh(),
+                tk.getVaiTro(),
+                tk.getTenNguoiDung(),
+                tk.getMaTaiKhoan()
+
+            });
+        }
+    }
+
+    public void resetColor() {
+        txt_MaNguoiDung.setBackground(Color.WHITE);
+        txt_TenDangNhap.setBackground(Color.WHITE);
+        txt_MatKhau.setBackground(Color.WHITE);
+    }
+
+    public User_entity getModel() {
+        User_entity tk = new User_entity();
+        tk.setMaNguoiDung(Integer.parseInt(txt_MaNguoiDung.getText()));
+        tk.setTenTK(txt_TenDangNhap.getText());
+        tk.setMatKhau(txt_MatKhau.getText());
+        return tk;
+    }
     
+    public User_entity getModelNV() {
+        User_entity tk = new User_entity();
+        tk.setTenNguoiDung(txt_TenNguoiDung.getText());
+        tk.setGioiTinh(rdoMale.isSelected()? "Nam":"Nữ");
+        tk.setSDT(txt_SDT.getText());
+        tk.setVaiTro((String) cboRole.getSelectedItem());
+        return tk;
+    }
+
+    public void LoadDataToModelUser(int pos) {
+        User_entity tk = qltk.getList().get(pos);
+        txt_TenNguoiDung.setText(tk.getTenNguoiDung());
+        txt_SDT.setText(tk.getSDT());
+        if (tk.getGioiTinh().equals("Nam")) {
+            rdoMale.setSelected(true);
+        } else {
+            rdoFemale.setSelected(true);
+        }
+        cboRole.setSelectedItem(tk.getVaiTro());
+    }
+
+    public void LoadDataToModel(int pos) {
+        User_entity tk = qltk.getList_TaiKhoan().get(pos);
+        txt_MaNguoiDung.setText(String.valueOf(tk.getMaNguoiDung()));
+        txt_TenDangNhap.setText(tk.getTenTK());
+        txt_MatKhau.setText(tk.getMatKhau());
+
+    }
+
+    public void loadUser(ArrayList<User_entity> ls) {
+        DefaultTableModel model = (DefaultTableModel) tbl_User.getModel();
+        model.setRowCount(0);
+        for (User_entity l : ls) {
+            Object[] data = new Object[5];
+            data[0] = l.getMaTaiKhoan();
+            data[1] = l.getTenNguoiDung();
+            data[2] = l.getSDT();
+            data[3] = l.getGioiTinh();
+            data[4] = l.getVaiTro();
+            model.addRow(data);
+        }
+    }
+
     public void New() {
         txt_MaNguoiDung.setText("");
         txt_TenDangNhap.setText("");
         txt_MatKhau.setText("");
-
     }
 
     @SuppressWarnings("unchecked")
@@ -102,16 +177,16 @@ public class QLTK_view extends javax.swing.JPanel {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        txt_MaNguoiDung2 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txt_TenNguoiDung = new javax.swing.JTextField();
+        rdoMale = new javax.swing.JRadioButton();
+        rdoFemale = new javax.swing.JRadioButton();
+        cboRole = new javax.swing.JComboBox<>();
         btn_Them1 = new javax.swing.JButton();
         btn_An1 = new javax.swing.JButton();
         btn_Sua1 = new javax.swing.JButton();
         btn_Moi1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_QuanLyTaiKhoan1 = new javax.swing.JTable();
+        tbl_User = new javax.swing.JTable();
         txt_SDT = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
 
@@ -478,13 +553,13 @@ public class QLTK_view extends javax.swing.JPanel {
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel20.setText("Giới tính");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Nam");
+        buttonGroup1.add(rdoMale);
+        rdoMale.setText("Nam");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Nữ");
+        buttonGroup1.add(rdoFemale);
+        rdoFemale.setText("Nữ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý", "Nhân viên" }));
 
         btn_Them1.setText("Thêm");
         btn_Them1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -514,23 +589,23 @@ public class QLTK_view extends javax.swing.JPanel {
             }
         });
 
-        tbl_QuanLyTaiKhoan1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_User.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "User ID", "Tên người dung", "Số tài khoản", "SĐT", "Giới tính", "Vai trò"
+                "User ID", "Tên người dung", "SĐT", "Giới tính", "Vai trò"
             }
         ));
-        tbl_QuanLyTaiKhoan1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_User.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_QuanLyTaiKhoan1MouseClicked(evt);
+                tbl_UserMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tbl_QuanLyTaiKhoan1);
+        jScrollPane2.setViewportView(tbl_User);
 
         txt_SDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -560,12 +635,12 @@ public class QLTK_view extends javax.swing.JPanel {
                             .addComponent(jLabel19))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(rdoMale)
                                 .addGap(33, 33, 33)
-                                .addComponent(jRadioButton2))
-                            .addComponent(txt_MaNguoiDung2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(rdoFemale))
+                            .addComponent(txt_TenNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -580,7 +655,7 @@ public class QLTK_view extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(txt_MaNguoiDung2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_TenNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
@@ -588,12 +663,12 @@ public class QLTK_view extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rdoMale)
+                    .addComponent(rdoFemale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Them1)
@@ -668,26 +743,6 @@ public class QLTK_view extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_ThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ThemMouseClicked
-
-    }//GEN-LAST:event_btn_ThemMouseClicked
-
-    private void btn_SuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SuaMouseClicked
-
-    }//GEN-LAST:event_btn_SuaMouseClicked
-
-    private void btn_AnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_AnMouseClicked
-
-    }//GEN-LAST:event_btn_AnMouseClicked
-
-    private void btn_MoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_MoiMouseClicked
-        New();
-    }//GEN-LAST:event_btn_MoiMouseClicked
-
-    private void tbl_QuanLyTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_QuanLyTaiKhoanMouseClicked
-
-    }//GEN-LAST:event_tbl_QuanLyTaiKhoanMouseClicked
-
     private void txt_NameInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NameInfoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_NameInfoActionPerformed
@@ -725,24 +780,102 @@ public class QLTK_view extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_SDTActionPerformed
 
     private void btn_Them1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Them1MouseClicked
-        // TODO add your handling code here:
+        String kq = qltk.add(getModelNV());
+        JOptionPane.showMessageDialog(this, kq);
+        loadUser(qltk.getList());
     }//GEN-LAST:event_btn_Them1MouseClicked
 
     private void btn_An1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_An1MouseClicked
-        // TODO add your handling code here:
+        String kq = qltk.Delete((int) tbl_User.getValueAt(tbl_User.getSelectedRow(), 0));
+        JOptionPane.showMessageDialog(this, kq);
+        loadUser(qltk.getList());
     }//GEN-LAST:event_btn_An1MouseClicked
 
     private void btn_Sua1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Sua1MouseClicked
-        // TODO add your handling code here:
+        User_entity u = getModelNV();
+        int id =(int) tbl_User.getValueAt(tbl_User.getSelectedRow(), 0);
+        String kq = qltk.Update(getModelNV(),id);
+        JOptionPane.showMessageDialog(this, kq);
+        loadUser(qltk.getList());
     }//GEN-LAST:event_btn_Sua1MouseClicked
 
     private void btn_Moi1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Moi1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_Moi1MouseClicked
 
-    private void tbl_QuanLyTaiKhoan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_QuanLyTaiKhoan1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbl_QuanLyTaiKhoan1MouseClicked
+    private void tbl_UserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_UserMouseClicked
+        int pos = tbl_User.getSelectedRow();
+        LoadDataToModelUser(pos);
+    }//GEN-LAST:event_tbl_UserMouseClicked
+
+    private void btn_ThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ThemMouseClicked
+        StringBuilder stb = new StringBuilder();
+        if (!v.isEmpty(txt_MaNguoiDung, "Vui long nhap ma nguoi dung muon them", stb)
+                && !v.isEmpty(txt_TenDangNhap, "Vui long nhap ten dang nhap muon them", stb)
+                && !v.isEmpty(txt_MatKhau, "Vui long nhap mat khau muon them", stb)) {
+            JOptionPane.showMessageDialog(this, stb);
+        } else {
+            int confirmResult = JOptionPane.showConfirmDialog(this, "Ban co chac chan muon them khong?", "Xac nhan", JOptionPane.YES_NO_OPTION);
+            if (confirmResult == JOptionPane.YES_OPTION) {
+                String kq = qltk.AddNew_TaiKhoan(getModel());
+                JOptionPane.showMessageDialog(this, kq);
+                LoadData(qltk.getList_TaiKhoan());
+                resetColor();
+            } else if (confirmResult == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(this, "Ban da huy bo them moi");
+            }
+
+        }
+    }//GEN-LAST:event_btn_ThemMouseClicked
+
+    private void btn_SuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SuaMouseClicked
+
+        StringBuilder stb = new StringBuilder();
+        int pos = tbl_QuanLyTaiKhoan.getSelectedRow();
+
+        if (!v.isEmpty(txt_MaNguoiDung, "Vui long nhap ma nguoi dung muon sua", stb)
+                && !v.isEmpty(txt_TenDangNhap, "Vui long nhap ten dang nhap muon sua", stb)
+                && !v.isEmpty(txt_MatKhau, "Vui long nhap mat khau muon sua", stb)) {
+            JOptionPane.showMessageDialog(this, stb);
+        } else {
+            int maTK = qltk.getList_TaiKhoan().get(pos).getMaTaiKhoan();
+            String kq = qltk.Update_TaiKhoan(getModel(), maTK);
+            JOptionPane.showMessageDialog(this, kq);
+            LoadData(qltk.getList_TaiKhoan());
+            resetColor();
+            System.out.println(maTK);
+
+        }
+    }//GEN-LAST:event_btn_SuaMouseClicked
+
+    private void btn_AnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_AnMouseClicked
+        StringBuilder stb = new StringBuilder();
+        int pos = tbl_QuanLyTaiKhoan.getSelectedRow();
+        if (!v.isEmpty(txt_TenDangNhap, "Vui long nhap ten dang nhap muon xoa", stb)) {
+            JOptionPane.showMessageDialog(this, stb);
+        } else {
+            int confirmResult = JOptionPane.showConfirmDialog(this, "Ban co chac chan muon xoa khong?", "Xac nhan", JOptionPane.YES_NO_OPTION);
+            if (confirmResult == JOptionPane.YES_OPTION) {
+                int maTK = qltk.getList_TaiKhoan().get(pos).getMaTaiKhoan();
+                String kq = qltk.Xoa_TaiKhoan(maTK);
+                JOptionPane.showMessageDialog(this, kq);
+                LoadData(qltk.getList_TaiKhoan());
+                resetColor();
+            } else if (confirmResult == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(this, "Ban da huy bo xoa bo");
+            }
+        }
+
+    }//GEN-LAST:event_btn_AnMouseClicked
+
+    private void btn_MoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_MoiMouseClicked
+        New();
+    }//GEN-LAST:event_btn_MoiMouseClicked
+
+    private void tbl_QuanLyTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_QuanLyTaiKhoanMouseClicked
+        int pos = tbl_QuanLyTaiKhoan.getSelectedRow();
+        LoadDataToModel(pos);
+    }//GEN-LAST:event_tbl_QuanLyTaiKhoanMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -756,7 +889,7 @@ public class QLTK_view extends javax.swing.JPanel {
     private javax.swing.JButton btn_Them1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cboRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -779,8 +912,6 @@ public class QLTK_view extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
@@ -793,20 +924,22 @@ public class QLTK_view extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel pic;
+    private javax.swing.JRadioButton rdoFemale;
+    private javax.swing.JRadioButton rdoMale;
     private javax.swing.JTable tbl_QuanLyTaiKhoan;
-    private javax.swing.JTable tbl_QuanLyTaiKhoan1;
+    private javax.swing.JTable tbl_User;
     private javax.swing.JTextField txt_AccountIDInfo;
     private javax.swing.JTextField txt_AccountNameInfo;
     private javax.swing.JTextField txt_GenderInfo;
     private javax.swing.JTextField txt_JobInfo;
     private javax.swing.JTextField txt_MaNguoiDung;
-    private javax.swing.JTextField txt_MaNguoiDung2;
     private javax.swing.JTextField txt_MatKhau;
     private javax.swing.JTextField txt_NameInfo;
     private javax.swing.JTextField txt_PasswordInfo;
     private javax.swing.JTextField txt_PhoneInfo;
     private javax.swing.JTextField txt_SDT;
     private javax.swing.JTextField txt_TenDangNhap;
+    private javax.swing.JTextField txt_TenNguoiDung;
     private javax.swing.JTextField txt_UserIDInfo;
     // End of variables declaration//GEN-END:variables
 }

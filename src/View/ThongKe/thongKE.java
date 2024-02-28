@@ -5,15 +5,10 @@
 package View.ThongKe;
 
 import entity.ThongKe_DoanhThu_Model;
-import entity.ThongKe_SanPham_model;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.time.Instant;
+import entity.SanPhamModel_view;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 import service.QuanLyThongKe_service;
@@ -33,19 +28,19 @@ public class thongKE extends javax.swing.JPanel {
         trangThai();
     }
 
-    public void LoadData_SanPham(ArrayList<ThongKe_SanPham_model> tkSanPham) {
+    public void LoadData_SanPham(ArrayList<SanPhamModel_view> tkSanPham) {
         DefaultTableModel model = (DefaultTableModel) tbl_SanPham.getModel();
         model.setRowCount(0);
-        for (ThongKe_SanPham_model tksp : tkSanPham) {
+        for (SanPhamModel_view tksp : tkSanPham) {
             model.addRow(new Object[]{
                 model.getRowCount() + 1,
-                tksp.getMaSanPham(),
-                tksp.getTenSanPham(),
+                tksp.getMaSP(),
+                tksp.getTenSP(),
                 tksp.getSoLuong(),
                 tksp.getMauSac(),
                 tksp.getSize(),
-                tksp.getTenDanhMuc(),
-                tksp.getGiaBan()
+                tksp.getDanhMuc(),
+                tksp.getDonGia()
             });
         }
     }
@@ -57,7 +52,8 @@ public class thongKE extends javax.swing.JPanel {
             model1.addRow(new Object[]{
                 tkdt.getMaHoaDon(),
                 tkdt.getTongTien(),
-                tkdt.getNgayTaoHoaDon()
+                tkdt.getNgayTaoHoaDon(),
+                tkdt.getKhachHang()
             });
         }
     }
@@ -337,7 +333,7 @@ public class thongKE extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã Hóa Đơn", "Doanh thu", "Thời Gian"
+                "Mã Hóa Đơn", "Tổng tiền", "Thời Gian", "Khách hàng"
             }
         ));
         jScrollPane2.setViewportView(tbl_DoanhThu);
@@ -551,9 +547,6 @@ public class thongKE extends javax.swing.JPanel {
     private javax.swing.JPanel ThongKeTheoNam;
     private javax.swing.JPanel ThongKeTheoNgay;
     private javax.swing.JPanel ThongKeTheoThang;
-    private javax.swing.JButton btn_TimKiem;
-    private javax.swing.JButton btn_TimKiem1;
-    private javax.swing.JButton btn_TimKiem2;
     private javax.swing.JButton btn_TimKiem3;
     private com.toedter.calendar.JDateChooser dc_NgayBatDau;
     private com.toedter.calendar.JDateChooser dc_NgayKetThuc;
@@ -569,12 +562,6 @@ public class thongKE extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
@@ -599,9 +586,6 @@ public class thongKE extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_TongDoanhThu2;
     private javax.swing.JLabel lbl_TongDoanhThu3;
     private javax.swing.JPanel soDonHangDaBan;
-    private javax.swing.JPanel sortByDay;
-    private javax.swing.JPanel sortByDay1;
-    private javax.swing.JPanel sortByDay2;
     private javax.swing.JPanel sortByDay3;
     private javax.swing.JTable tbl_DoanhThu;
     private javax.swing.JTable tbl_SanPham;

@@ -5,8 +5,8 @@
 package service;
 
 import entity.ThongKe_DoanhThu_Model;
-import entity.ThongKe_SanPham_model;
-import repository.ThongKe_DoanhThu_repository;
+import entity.SanPhamModel_view;
+import repository.ThongKe_repository;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -16,11 +16,11 @@ import java.sql.Date;
  */
 public class QuanLyThongKe_service {
 
-    ThongKe_DoanhThu_repository thongKe_DoanhThu_repository = new ThongKe_DoanhThu_repository();
+    ThongKe_repository thongKe_DoanhThu_repository = new ThongKe_repository();
 
     
  
-    public ArrayList<ThongKe_SanPham_model> getList_ThongKeSanPham(){
+    public ArrayList<SanPhamModel_view> getList_ThongKeSanPham(){
         return thongKe_DoanhThu_repository.getList_ThongKeSanPham();
     }
 

@@ -8,27 +8,53 @@ package entity;
  *
  * @author ADMIN
  */
-public class ThongKe_SanPham_model {
+public class SanPhamDaMua_model {
+
     private int maSanPham;
     private String tenSanPham;
-    private int soLuong;
     private String mauSac;
     private double size;
     private String tenDanhMuc;
-    private double giaBan;
+    private int soLuong;
+    private double donGia;
+    private int maHoaDon;
+    private int maKhachHang;
 
-    public ThongKe_SanPham_model() {
+    public SanPhamDaMua_model() {
     }
 
-    public ThongKe_SanPham_model(int maSanPham, String tenSanPham, int soLuong, String mauSac, double size, String tenDanhMuc, double giaBan) {
+    public SanPhamDaMua_model(int maSanPham, String tenSanPham, String mauSac, double size, String tenDanhMuc, int soLuong, double donGia, int maHoaDon, int maKhachHang) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
-        this.soLuong = soLuong;
         this.mauSac = mauSac;
         this.size = size;
         this.tenDanhMuc = tenDanhMuc;
-        this.giaBan = giaBan;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+        this.maHoaDon = maHoaDon;
+        this.maKhachHang = maKhachHang;
     }
+
+
+    public int getMaKhachHang() {
+        return maKhachHang;
+    }
+
+    public void setMaKhachHang(int maKhachHang) {
+        this.maKhachHang = maKhachHang;
+    }
+
+    
+    
+    public double getSize() {
+        return size;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
+    }
+
+   
 
     public int getMaSanPham() {
         return maSanPham;
@@ -46,28 +72,12 @@ public class ThongKe_SanPham_model {
         this.tenSanPham = tenSanPham;
     }
 
-    public int getSoLuong() {
-        return soLuong;
-    }
-
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
-
     public String getMauSac() {
         return mauSac;
     }
 
     public void setMauSac(String mauSac) {
         this.mauSac = mauSac;
-    }
-
-    public double getSize() {
-        return size;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
     }
 
     public String getTenDanhMuc() {
@@ -78,13 +88,28 @@ public class ThongKe_SanPham_model {
         this.tenDanhMuc = tenDanhMuc;
     }
 
-    public double getGiaBan() {
-        return giaBan;
+    public int getSoLuong() {
+        return soLuong;
     }
 
-    public void setGiaBan(double giaBan) {
-        this.giaBan = giaBan;
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
-    
-    
+
+    public double getDonGia() {
+        return donGia;
+    }
+
+    public void setDonGia(double donGia) {
+        this.donGia = donGia;
+    }
+
+    public int getMaHoaDon() {
+        return maHoaDon;
+    }
+
+    public void setMaHoaDon(int maHoaDon) {
+        this.maHoaDon = maHoaDon;
+    }
+
 }

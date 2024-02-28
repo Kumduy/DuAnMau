@@ -11,10 +11,12 @@ import java.sql.Date;
  * @author DELL
  */
 public class HoaDon_entity {
-    private int maHD,maNV,maKH;
+
+    private int maHD, maNV, maKH;
     private double tongTien;
     private java.sql.Date ngayTao;
     private String trangThai;
+    private double tienTra;
 
     public HoaDon_entity(int maHD, int maNV, int maKH, double tongTien, Date ngayTao, String trangThai) {
         this.maHD = maHD;
@@ -23,6 +25,14 @@ public class HoaDon_entity {
         this.tongTien = tongTien;
         this.ngayTao = ngayTao;
         this.trangThai = trangThai;
+    }
+
+    public double getTienTra() {
+        return tienTra;
+    }
+
+    public void setTienTra(double tienTra) {
+        this.tienTra = tienTra;
     }
 
     public HoaDon_entity() {
@@ -76,6 +86,4 @@ public class HoaDon_entity {
         this.trangThai = trangThai;
     }
 
-    
-    
 }

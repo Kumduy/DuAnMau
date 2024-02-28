@@ -31,8 +31,8 @@ public class Sp_service {
         return sp.getlistbyId(Id);
     }
 
-    public ArrayList<Thuoctinh> thuoctinh(String thuoctinh) {
-        return sp.getList(thuoctinh);
+    public ArrayList<Thuoctinh> thuoctinh(String thuoctinh,String tenCot) {
+        return sp.getList(thuoctinh,tenCot);
     }
 
     public String add(SanPhamModel_view tt) {

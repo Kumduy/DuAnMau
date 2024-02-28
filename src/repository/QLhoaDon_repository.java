@@ -5,6 +5,7 @@
 package repository;
 
 import entity.HDCTmodel_entity;
+import entity.HoaDonModel;
 import entity.HoaDon_entity;
 import entity.SanPhamModel_view;
 import java.sql.*;
@@ -18,18 +19,44 @@ public class QLhoaDon_repository {
 
     DbConnection dbconnection = new DbConnection();
 
-    public ArrayList<HoaDon_entity> getList() {
-        String sql = "select * from HOADON WHERE TrangThai != N'Hủy'";
-        ArrayList<HoaDon_entity> ls = new ArrayList<>();
+    public ArrayList<String> getTrangThai() {
+        String sql = "select TrangThai from HOADON WHERE TrangThai != N'Hủy' \n"
+                + "GROUP BY TrangThai";
+        ArrayList<String> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                HoaDon_entity hd = new HoaDon_entity(rs.getInt("MaHoaDon"),
-                        rs.getInt("MaNguoiDung"),
-                        rs.getInt("MaKhachHang"),
-                        rs.getDouble("TongTien"),
-                        rs.getDate("NgayTaoHoaDon"),
-                        rs.getString("TrangThai"));
+                String tt = rs.getString("TrangThai");
+                ls.add(tt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ls;
+    }
+
+        public ArrayList<HoaDonModel> getList() {
+        String sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "INNER JOIN NGUOIDUNG ON HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "WHERE TrangThai != N'Hủy'";
+        ArrayList<HoaDonModel> ls = new ArrayList<>();
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                HoaDonModel hd = new HoaDonModel();
+                hd.setMaHoaDon(rs.getInt("MaHoaDon"));
+                hd.setKhachHang(rs.getString("TenKhachHang"));
+                hd.setNgayDatHang(rs.getDate("NgayTaoHoaDon"));
+                hd.setNguoiDung(rs.getString("TenNguoiDung"));
+                hd.setTongTien(rs.getDouble("TongTien"));
+                hd.setTrangThai(rs.getString("TrangThai"));
+                hd.setTienTra(rs.getDouble("TienKhachTra"));
+                if (rs.getDouble("TienKhachTra") >= rs.getDouble("TongTien")) {
+                    hd.setTienThua(rs.getDouble("TienKhachTra") - rs.getDouble("TongTien"));
+                } else {
+                    hd.setTienThua(0);
+                }
                 ls.add(hd);
             }
         } catch (Exception e) {
@@ -38,19 +65,29 @@ public class QLhoaDon_repository {
         return ls;
     }
 
-    public ArrayList<HoaDon_entity> getHDbyTT(boolean trangThai) {
-        String sql = "select * from HOADON where TrangThai = ?";
-        ArrayList<HoaDon_entity> ls = new ArrayList<>();
+    public ArrayList<HoaDonModel> getHDbyTT(String trangThai) {
+        String sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "INNER JOIN NGUOIDUNG ON HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "WHERE TrangThai != N'Hủy' AND TrangThai = ?";
+        ArrayList<HoaDonModel> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setBoolean(1, true);
+            ps.setString(1, trangThai);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                HoaDon_entity hd = new HoaDon_entity(rs.getInt("MaHoaDon"),
-                        rs.getInt("MaNguoiDung"),
-                        rs.getInt("MaKhachHang"),
-                        rs.getDouble("TongTien"),
-                        rs.getDate("NgayTaoHoaDon"),
-                        rs.getString("TrangThai"));
+                HoaDonModel hd = new HoaDonModel();
+                hd.setMaHoaDon(rs.getInt("MaHoaDon"));
+                hd.setKhachHang(rs.getString("TenKhachHang"));
+                hd.setNgayDatHang(rs.getDate("NgayTaoHoaDon"));
+                hd.setNguoiDung(rs.getString("TenNguoiDung"));
+                hd.setTongTien(rs.getDouble("TongTien"));
+                hd.setTrangThai(rs.getString("TrangThai"));
+                hd.setTienTra(rs.getDouble("TienKhachTra"));
+                if (rs.getDouble("TienKhachTra") >= rs.getDouble("TongTien")) {
+                    hd.setTienThua(rs.getDouble("TienKhachTra") - rs.getDouble("TongTien"));
+                } else {
+                    hd.setTienThua(0);
+                }
                 ls.add(hd);
             }
         } catch (Exception e) {
@@ -92,7 +129,7 @@ public class QLhoaDon_repository {
                         rs.getInt("MaSanPham"),
                         rs.getInt("SoLuong"),
                         rs.getDouble("GiaBan"),
-                        rs.getBoolean("TrangThai") ? "Chưa qua sử dụng" : "Đã sử dụng",
+                        rs.getBoolean("TrangThai") ? "second hand" : "New",
                         rs.getString("TenSanPham"));
                 ls.add(HDCT);
             }
@@ -163,7 +200,7 @@ public class QLhoaDon_repository {
                 + "    SIZE ON CHITIETSANPHAM.MaSize = SIZE.MaSize\n"
                 + "INNER JOIN \n"
                 + "    DANHMUC ON SANPHAM.MaDanhMuc = DANHMUC.MaDanhMuc\n"
-                + "WHERE SANPHAM.MaSanPham NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'SANPHAM') AND MaSanPham = " + id ;
+                + "WHERE SANPHAM.MaSanPham NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'SANPHAM') AND MaSanPham = " + id;
         ArrayList<SanPhamModel_view> ls = new ArrayList<>();
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -183,7 +220,7 @@ public class QLhoaDon_repository {
         }
         return ls;
     }
-    
+
     public Boolean addHD(HoaDon_entity hd) {
         String sql = "INSERT INTO HOADON (MaKhachHang, MaNguoiDung, TongTien, NgayTaoHoaDon, TrangThai) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -209,10 +246,10 @@ public class QLhoaDon_repository {
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                double money = rs.getInt("SoLuong")*rs.getDouble("GiaBan");
+                double money = rs.getInt("SoLuong") * rs.getDouble("GiaBan");
                 tongTien = tongTien + money;
             }
-            String sqlUpdate ="UPDATE HOADON SET TongTien = ? WHERE MaHoaDon = ?";
+            String sqlUpdate = "UPDATE HOADON SET TongTien = ? WHERE MaHoaDon = ?";
             PreparedStatement ps2 = conn.prepareStatement(sqlUpdate);
             ps2.setDouble(1, tongTien);
             ps2.setInt(2, idHD);
@@ -225,10 +262,10 @@ public class QLhoaDon_repository {
         }
         return false;
     }
-    
-    public boolean huyHD(int idHD){
-        String sqlDelete ="UPDATE HOADON SET TrangThai = N'Hủy' WHERE MaHoaDon = " + idHD;
-        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)){
+
+    public boolean huyHD(int idHD) {
+        String sqlDelete = "UPDATE HOADON SET TrangThai = N'Hủy' WHERE MaHoaDon = " + idHD;
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)) {
             int kq = ps.executeUpdate();
             if (kq > 0) {
                 return true;
@@ -238,10 +275,10 @@ public class QLhoaDon_repository {
         }
         return false;
     }
-    
-    public boolean xoaHDCT(int idHDCT){
-        String sqlDelete ="INSERT INTO deleted_records (record_id,table_name) VALUES(?,'HOADONCHITIET')";
-        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)){
+
+    public boolean xoaHDCT(int idHDCT) {
+        String sqlDelete = "INSERT INTO deleted_records (record_id,table_name) VALUES(?,'HOADONCHITIET')";
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)) {
             ps.setInt(1, idHDCT);
             int kq = ps.executeUpdate();
             if (kq > 0) {
@@ -317,10 +354,11 @@ public class QLhoaDon_repository {
         return false;
     }
 
-    public boolean updateTrangThaiHD(int idHD) {
-        String sql = "UPDATE HOADON SET TrangThai = N'Đã thanh toán' WHERE MaHoaDon = ?";
+    public boolean updateTrangThaiHD(int idHD, double  tienTra) {
+        String sql = "UPDATE HOADON SET TienKhachTra = ? ,TrangThai = N'Đã thanh toán' WHERE MaHoaDon = ?";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idHD);
+            ps.setDouble(1, tienTra);
+            ps.setInt(2, idHD);
             int kq = ps.executeUpdate();
             if (kq > 0) {
                 return true;
