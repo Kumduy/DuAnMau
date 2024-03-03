@@ -35,6 +35,14 @@ public class HoaDon_service {
         return d.getList();
     }
 
+    public ArrayList<HoaDonModel> getListBySreach(String TypeData, String data) {
+        return d.getListBySreach(TypeData, data);
+    }
+
+    public HoaDonModel getListHDmodelbyID(int id) {
+        return d.getListByID(id);
+    }
+
     public ArrayList<HoaDon_entity> getListHDbyID(int id) {
         return d.getHDbyID(id);
     }
@@ -99,23 +107,27 @@ public class HoaDon_service {
         }
     }
 
-    public String xoaHDCT(int idHDCT, int idHD) {
-        boolean check = d.xoaHDCT(idHDCT);
-        if (check) {
-            boolean check2 = d.capNhapTongTien(idHD);
-            if (check2) {
-                return "Xóa sản phẩm hóa đơn thành công";
+    public String xoaHDCT(String trangThai, int idHDCT, int idHD) {
+        if (trangThai.equals("Đã thanh toán")) {
+            return "sửa";
+        } else {
+            boolean check = d.xoaHDCT(idHDCT);
+            if (check) {
+                boolean check2 = d.capNhapTongTien(idHD);
+                if (check2) {
+                    return "Xóa sản phẩm hóa đơn thành công";
+                } else {
+                    return "Xóa sản phẩm hóa đơn thất bại";
+                }
             } else {
                 return "Xóa sản phẩm hóa đơn thất bại";
             }
-        } else {
-            return "Xóa sản phẩm hóa đơn thất bại";
         }
     }
 
     public String themSanPhamVaoHoaDonChiTiet(String trangThai, int idHD, int idSP, int soLuongMua, double giaban) {
         if (trangThai.equals("Đã thanh toán")) {
-            return "Sản phẩm này đã được thanh toán";
+            return "Sản phẩm này đã được thanh toán không thể hủy";
         } else {
             boolean check = d.themSanPhamVaoHoaDonChiTiet(idHD, idSP, soLuongMua, giaban);
             if (check) {

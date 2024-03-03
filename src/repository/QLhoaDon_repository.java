@@ -64,6 +64,80 @@ public class QLhoaDon_repository {
         }
         return ls;
     }
+        
+        public HoaDonModel getListByID(int id) {
+        String sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "INNER JOIN NGUOIDUNG ON HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "WHERE MaHoaDon = ? AND TrangThai != N'Hủy'";
+        HoaDonModel hd = new HoaDonModel();
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                hd = new HoaDonModel();
+                hd.setMaHoaDon(rs.getInt("MaHoaDon"));
+                hd.setKhachHang(rs.getString("TenKhachHang"));
+                hd.setNgayDatHang(rs.getDate("NgayTaoHoaDon"));
+                hd.setNguoiDung(rs.getString("TenNguoiDung"));
+                hd.setTongTien(rs.getDouble("TongTien"));
+                hd.setTrangThai(rs.getString("TrangThai"));
+                hd.setTienTra(rs.getDouble("TienKhachTra"));
+                if (rs.getDouble("TienKhachTra") >= rs.getDouble("TongTien")) {
+                    hd.setTienThua(rs.getDouble("TienKhachTra") - rs.getDouble("TongTien"));
+                } else {
+                    hd.setTienThua(0);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hd;
+    }
+        
+         public ArrayList<HoaDonModel> getListBySreach(String TypeData,String data ) {
+        String sql ;
+             if (TypeData.equals("Mã hóa đơn")) {
+                 sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "INNER JOIN NGUOIDUNG ON HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "WHERE TrangThai != N'Hủy' AND MaHoaDon = ?";
+             } else if(TypeData.equals("Tên khách hàng")) {
+                 sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "INNER JOIN NGUOIDUNG ON HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "WHERE TrangThai != N'Hủy' AND TenKhachHang = ?";
+             }else {
+                 sql = "select * from HOADON \n"
+                + "INNER JOIN KHACHHANG on HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "INNER JOIN NGUOIDUNG ON HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "WHERE TrangThai != N'Hủy' AND TenNguoiDung = ?";
+             }
+        ArrayList<HoaDonModel> ls = new ArrayList<>();
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, data);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                HoaDonModel hd = new HoaDonModel();
+                hd.setMaHoaDon(rs.getInt("MaHoaDon"));
+                hd.setKhachHang(rs.getString("TenKhachHang"));
+                hd.setNgayDatHang(rs.getDate("NgayTaoHoaDon"));
+                hd.setNguoiDung(rs.getString("TenNguoiDung"));
+                hd.setTongTien(rs.getDouble("TongTien"));
+                hd.setTrangThai(rs.getString("TrangThai"));
+                hd.setTienTra(rs.getDouble("TienKhachTra"));
+                if (rs.getDouble("TienKhachTra") >= rs.getDouble("TongTien")) {
+                    hd.setTienThua(rs.getDouble("TienKhachTra") - rs.getDouble("TongTien"));
+                } else {
+                    hd.setTienThua(0);
+                }
+                ls.add(hd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ls;
+    }
 
     public ArrayList<HoaDonModel> getHDbyTT(String trangThai) {
         String sql = "select * from HOADON \n"

@@ -26,11 +26,15 @@ public class QLKH_service {
     }
 
     public String AddNew_KhachHang(KhachHangModel kh) {
-        Boolean check = khachHang_repository.AddNew_KhachHang(kh);
+        if (khachHang_repository.getList_KhachHangBySDT(kh.getSoDienThoai()).size() > 0) {
+            return "Số điện thoại đã tồn tại";
+        }else{
+            Boolean check = khachHang_repository.AddNew_KhachHang(kh);
         if (check == true) {
             return "Them thanh cong";
         } else {
             return "Them that bai";
+        }
         }
     }
 
