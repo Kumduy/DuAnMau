@@ -31,6 +31,19 @@ public class QLTK_view extends javax.swing.JPanel {
 
     public static User_entity u;
 
+    public boolean vali() {
+        Validate v = new Validate();
+        StringBuilder stb = new StringBuilder();
+        v.isEmpty(txt_TenNguoiDung, "Vui lòng nhập tên nhân viên", stb);
+        v.isPhoneNumber(txt_SDT, "Vui lòng nhập số điện thoại hợp lệ", stb);
+        if (stb.length() > 0) {
+            JOptionPane.showMessageDialog(this, stb);
+        } else {
+            return true;
+        }
+        return false;
+    }
+
     public void myInfo(User_entity u) {
         txt_AccountIDInfo.setText(String.valueOf(u.getMaTaiKhoan()));
         txt_AccountNameInfo.setText(u.getTenNguoiDung());
@@ -73,11 +86,11 @@ public class QLTK_view extends javax.swing.JPanel {
         tk.setMatKhau(txt_MatKhau.getText());
         return tk;
     }
-    
+
     public User_entity getModelNV() {
         User_entity tk = new User_entity();
         tk.setTenNguoiDung(txt_TenNguoiDung.getText());
-        tk.setGioiTinh(rdoMale.isSelected()? "Nam":"Nữ");
+        tk.setGioiTinh(rdoMale.isSelected() ? "Nam" : "Nữ");
         tk.setSDT(txt_SDT.getText());
         tk.setVaiTro((String) cboRole.getSelectedItem());
         return tk;
@@ -780,9 +793,11 @@ public class QLTK_view extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_SDTActionPerformed
 
     private void btn_Them1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Them1MouseClicked
-        String kq = qltk.add(getModelNV());
-        JOptionPane.showMessageDialog(this, kq);
-        loadUser(qltk.getList());
+        if (vali()) {
+            String kq = qltk.add(getModelNV());
+            JOptionPane.showMessageDialog(this, kq);
+            loadUser(qltk.getList());
+        }
     }//GEN-LAST:event_btn_Them1MouseClicked
 
     private void btn_An1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_An1MouseClicked
@@ -792,11 +807,13 @@ public class QLTK_view extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_An1MouseClicked
 
     private void btn_Sua1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Sua1MouseClicked
-        User_entity u = getModelNV();
-        int id =(int) tbl_User.getValueAt(tbl_User.getSelectedRow(), 0);
-        String kq = qltk.Update(getModelNV(),id);
-        JOptionPane.showMessageDialog(this, kq);
-        loadUser(qltk.getList());
+        if (vali()) {
+            User_entity u = getModelNV();
+            int id = (int) tbl_User.getValueAt(tbl_User.getSelectedRow(), 0);
+            String kq = qltk.Update(getModelNV(), id);
+            JOptionPane.showMessageDialog(this, kq);
+            loadUser(qltk.getList());
+        }
     }//GEN-LAST:event_btn_Sua1MouseClicked
 
     private void btn_Moi1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Moi1MouseClicked
