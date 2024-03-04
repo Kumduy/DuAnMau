@@ -364,6 +364,21 @@ public class QLhoaDon_repository {
         return false;
     }
 
+    public boolean updateHDCT(int idHDCT,int soLuong) {
+        String sqlDelete = "UPDATE HOADONCHITIET SET SoLuong = ? WHERE MaHoaDonChiTiet = ?";
+        try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlDelete)) {
+            ps.setInt(1, soLuong);
+            ps.setInt(2, idHDCT);
+            int kq = ps.executeUpdate();
+            if (kq > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public boolean themSanPhamVaoHoaDonChiTiet(int idHD, int idSP, int soLuongMua, double giaban) {
         String sqlSelect = "SELECT * FROM HOADONCHITIET WHERE MaHoaDon = ? AND MaSanPham = ? AND HOADONCHITIET.MaHoaDonChiTiet NOT IN (SELECT record_id FROM deleted_records WHERE table_name = 'HOADONCHITIET')";
         try (Connection conn = dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sqlSelect)) {

@@ -124,6 +124,24 @@ public class HoaDon_service {
             }
         }
     }
+    
+    public String updateHDCT(String trangThai,int idHDCT,int soLuong,int idHD) {
+        if (trangThai.equals("Đã thanh toán")) {
+            return "sửa";
+        } else {
+            boolean check = d.updateHDCT(idHDCT, soLuong);
+            if (check) {
+                boolean check2 = d.capNhapTongTien(idHD);
+                if (check2) {
+                    return "Cập nhập số lượng sản phẩm hóa đơn thành công";
+                } else {
+                    return "Cập nhập số lượng sản phẩm hóa đơn thất bại";
+                }
+            } else {
+                return "Cập nhập số lượng phẩm hóa đơn thất bại";
+            }
+        }
+    }
 
     public String themSanPhamVaoHoaDonChiTiet(String trangThai, int idHD, int idSP, int soLuongMua, double giaban) {
         if (trangThai.equals("Đã thanh toán")) {

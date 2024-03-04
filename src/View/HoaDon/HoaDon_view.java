@@ -148,7 +148,7 @@ public class HoaDon_view extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbSP = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        btnDeleteHDCT = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtMaKH = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -177,6 +177,7 @@ public class HoaDon_view extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         txtSreach = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
+        btnUpdateHDCT = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1028, 500));
@@ -231,15 +232,15 @@ public class HoaDon_view extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Sản phẩm");
 
-        jButton5.setText("Xóa");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDeleteHDCT.setText("Xóa");
+        btnDeleteHDCT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+                btnDeleteHDCTMouseClicked(evt);
             }
         });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteHDCT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnDeleteHDCTActionPerformed(evt);
             }
         });
 
@@ -373,10 +374,6 @@ public class HoaDon_view extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dcNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4))
@@ -384,6 +381,21 @@ public class HoaDon_view extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtMaHD)
                             .addComponent(txtMaKH)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dcNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbTongTien1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbTongTien)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -398,22 +410,11 @@ public class HoaDon_view extends javax.swing.JPanel {
                                 .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                                 .addComponent(btnSreach))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTientra)))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbTongTien1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbTongTien)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,7 +424,7 @@ public class HoaDon_view extends javax.swing.JPanel {
                     .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(btnSreach))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -431,7 +432,7 @@ public class HoaDon_view extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(dcNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -459,7 +460,7 @@ public class HoaDon_view extends javax.swing.JPanel {
                 .addComponent(btnUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnClear)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -490,6 +491,18 @@ public class HoaDon_view extends javax.swing.JPanel {
             }
         });
 
+        btnUpdateHDCT.setText("Cập nhập");
+        btnUpdateHDCT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateHDCTMouseClicked(evt);
+            }
+        });
+        btnUpdateHDCT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateHDCTActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -505,10 +518,13 @@ public class HoaDon_view extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addComponent(jButton5)
-                                    .addComponent(jLabel7))
+                                    .addComponent(jLabel7)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnDeleteHDCT)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnUpdateHDCT)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                        .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -531,8 +547,7 @@ public class HoaDon_view extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -542,18 +557,21 @@ public class HoaDon_view extends javax.swing.JPanel {
                             .addComponent(jLabel12)
                             .addComponent(txtSreach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTimKiem))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(4, 4, 4)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeleteHDCT)
+                            .addComponent(btnUpdateHDCT))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -619,22 +637,22 @@ public class HoaDon_view extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tbSPMouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+    private void btnDeleteHDCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteHDCTMouseClicked
         int mahdct = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 2);
         int mahd = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 1);
         int maSP = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 3);
         int soLuong = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 6);
         int tonKho = se.getListSPbyID(maSP).get(0).getSoLuong() + soLuong;
         String trangThai = se.getListHDbyID(mahd).get(0).getTrangThai();
-        String kq = se.xoaHDCT(trangThai,mahdct, mahd);
-        if (!kq.equals("Sản phẩm này đã được thanh toán")) {
+        String kq = se.xoaHDCT(trangThai, mahdct, mahd);
+        if (!trangThai.equals("Đã thanh toán")) {
             se.updateSP(tonKho, maSP);
         }
         JOptionPane.showMessageDialog(this, kq);
         FillTableHDCT(se.getListHDCT(mahd));
         FillTableHD(se.getListHD());
         FillTableSP(se.getListSP());
-    }//GEN-LAST:event_jButton5MouseClicked
+    }//GEN-LAST:event_btnDeleteHDCTMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
@@ -665,9 +683,9 @@ public class HoaDon_view extends javax.swing.JPanel {
         FillTableHDCT(se.getListHDCT(ma));
     }//GEN-LAST:event_btnUpdateMouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnDeleteHDCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteHDCTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnDeleteHDCTActionPerformed
 
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
         ArrayList<HDCTmodel_entity> ls = se.getListHDCT(se.getListHD().get(tbHoaDon.getSelectedRow()).getMaHoaDon());
@@ -727,20 +745,61 @@ public class HoaDon_view extends javax.swing.JPanel {
         FillTableHD(se.getListBySreach((String) cbmData.getSelectedItem(), txtSreach.getText()));
     }//GEN-LAST:event_btnTimKiemMouseClicked
 
+    private void btnUpdateHDCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateHDCTMouseClicked
+        String soLuong = JOptionPane.showInputDialog("Nhập số lượng mua:");
+        String kq = "Vui lòng nhập đúng thông tin";
+        if (!soLuong.equals(null) && soLuong.matches(".*\\d.*")) {
+            int soLuongMua = Integer.parseInt(soLuong);
+            if (soLuongMua > 0) {
+                int mahdct = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 2);
+                int mahd = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 1);
+                int maSP = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 3);
+                int khoHang = se.getListSPbyID(maSP).get(0).getSoLuong();
+                int soLuongHienTai = (int) tbHDCT.getValueAt(tbHDCT.getSelectedRow(), 6);
+                int tonKho = 0;
+                String trangThai = se.getListHDbyID(mahd).get(0).getTrangThai();               
+                if (soLuongMua > soLuongHienTai) {
+                    if (khoHang > (soLuongMua - soLuongHienTai)) {
+                        kq = se.updateHDCT(trangThai, mahdct, soLuongMua, mahd);
+                        tonKho = khoHang - (soLuongMua - soLuongHienTai);
+                    } else {
+                        tonKho = khoHang;
+                    }
+                } else {
+                    kq = se.updateHDCT(trangThai, mahdct, soLuongMua, mahd);
+                    tonKho = khoHang + (soLuongHienTai - soLuongMua);
+                }
+                if (!trangThai.equals("Đã thanh toán")) {
+                    se.updateSP(tonKho, maSP);
+                }
+                
+                FillTableHDCT(se.getListHDCT(mahd));
+                FillTableHD(se.getListHD());
+                FillTableSP(se.getListSP());
+            }
+        }
+        JOptionPane.showMessageDialog(this, kq);
+    }//GEN-LAST:event_btnUpdateHDCTMouseClicked
+
+    private void btnUpdateHDCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateHDCTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateHDCTActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteHDCT;
     private javax.swing.JButton btnPay;
     private javax.swing.JButton btnSort;
     private javax.swing.JButton btnSreach;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnUpdateHDCT;
     private javax.swing.JComboBox<String> cbmData;
     private javax.swing.JComboBox<String> cboTrangThai;
     private com.toedter.calendar.JDateChooser dcNgayTao;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
