@@ -35,6 +35,8 @@ public class HoaDon_view extends javax.swing.JPanel {
         dcNgayTao.setDate(currentDate.getTime());
         setCombobox(se.getTrangThaiList());
         btnReload.setVisible(false);
+        btnUpdateHDCT.setVisible(false);
+        btnDeleteHDCT.setVisible(false);
     }
 
     Validate val = new Validate();
@@ -214,6 +216,11 @@ public class HoaDon_view extends javax.swing.JPanel {
             }
         ));
         tbHDCT.setOpaque(false);
+        tbHDCT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbHDCTMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbHDCT);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -687,6 +694,8 @@ public class HoaDon_view extends javax.swing.JPanel {
         FillTableHDCT(se.getListHDCT(mahd));
         FillTableHD(se.getListHD());
         FillTableSP(se.getListSP());
+        btnUpdateHDCT.setVisible(false);
+        btnDeleteHDCT.setVisible(false);
     }//GEN-LAST:event_btnDeleteHDCTMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -816,6 +825,8 @@ public class HoaDon_view extends javax.swing.JPanel {
             }
         }
         JOptionPane.showMessageDialog(this, kq);
+        btnUpdateHDCT.setVisible(false);
+        btnDeleteHDCT.setVisible(false);
     }//GEN-LAST:event_btnUpdateHDCTMouseClicked
 
     private void btnUpdateHDCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateHDCTActionPerformed
@@ -843,6 +854,11 @@ public class HoaDon_view extends javax.swing.JPanel {
         btnReload.setVisible(false);
         clear();
     }//GEN-LAST:event_btnReloadMouseClicked
+
+    private void tbHDCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTMouseClicked
+        btnUpdateHDCT.setVisible(true);
+        btnDeleteHDCT.setVisible(true);
+    }//GEN-LAST:event_tbHDCTMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

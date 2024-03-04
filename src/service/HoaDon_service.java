@@ -109,7 +109,7 @@ public class HoaDon_service {
 
     public String xoaHDCT(String trangThai, int idHDCT, int idHD) {
         if (trangThai.equals("Đã thanh toán")) {
-            return "sửa";
+            return "Đã thanh toán, không thể sửa";
         } else {
             boolean check = d.xoaHDCT(idHDCT);
             if (check) {
@@ -127,7 +127,7 @@ public class HoaDon_service {
     
     public String updateHDCT(String trangThai,int idHDCT,int soLuong,int idHD) {
         if (trangThai.equals("Đã thanh toán")) {
-            return "sửa";
+            return "Đã thanh toán, không thể sửa";
         } else {
             boolean check = d.updateHDCT(idHDCT, soLuong);
             if (check) {
