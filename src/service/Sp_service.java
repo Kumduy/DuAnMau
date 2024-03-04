@@ -30,6 +30,10 @@ public class Sp_service {
     public ArrayList<SanPhamModel_view> timkiem(int Id) {
         return sp.getlistbyId(Id);
     }
+    
+    public ArrayList<SanPhamModel_view> getlistbyName(String name) {
+        return sp.getlistbyName(name);
+    }
 
     public ArrayList<Thuoctinh> thuoctinh(String thuoctinh,String tenCot) {
         return sp.getList(thuoctinh,tenCot);

@@ -154,6 +154,36 @@ public class QlySP {
         }
         return ml;
     }
+    
+     public ArrayList<SanPhamModel_view> getlistbyName(String name) {
+        String sql = "SELECT * From SANPHAM\n"
+                + "Inner join CHITIETSANPHAM on SANPHAM.MaSanPham = CHITIETSANPHAM.SanPham\n"
+                + "Inner join MAU on CHITIETSANPHAM.MaMau = MAU.MaMau\n"
+                + "Inner join SIZE on CHITIETSANPHAM.MaSize = Size.MaSize\n"
+                + "Inner join DANHMUC on SANPHAM.MaDanhMuc = DANHMUC.MaDanhMuc\n"
+                + "Where MaSanPham not in (select record_id from deleted_records where table_name = 'SANPHAM')\n"
+                + "and TenSanPham = ?";
+        ArrayList<SanPhamModel_view> ml = new ArrayList<>();
+        try (Connection conn = connection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, name);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                SanPhamModel_view smp = new SanPhamModel_view();
+                smp.setDanhMuc(rs.getString("TenDanhMuc"));
+                smp.setTrangThai(rs.getBoolean("TrangThai"));
+                smp.setDonGia(rs.getDouble("Giaban"));
+                smp.setMaSP(rs.getInt("MaSanPham"));
+                smp.setMauSac(rs.getString("MauSac"));
+                smp.setSize(rs.getDouble("Size"));
+                smp.setSoLuong(rs.getInt("SoLuongTon"));
+                smp.setTenSP(rs.getString("TenSanPham"));
+                ml.add(smp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ml;
+    }
 
     public boolean add(SanPhamModel_view sp) {
         String sql = "INSERT INTO SANPHAM (TenSanPham, MaDanhMuc, TrangThai) VALUES (?,?,?);";

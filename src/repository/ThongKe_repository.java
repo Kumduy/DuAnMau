@@ -18,23 +18,23 @@ public class ThongKe_repository {
     DbConnection Dbconnection = new DbConnection();
 
     public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThu() {
-        String sql = "SELECT MaHoaDon,KHACHHANG.MaKhachHang,NGUOIDUNG.MaNguoiDung,NgayTaoHoaDon,TongTien,TrangThai\n"
-                + "FROM HOADON\n"
-                + "INNER JOIN KHACHHANG  ON HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
-                + "INNER JOIN NGUOIDUNG ON   HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
-                + "WHERE TrangThai = N'Đã Thanh Toán'";
+        String sql = "SELECT MaHoaDon,KHACHHANG.TenKhachHang,NGUOIDUNG.TenNguoiDung,NgayTaoHoaDon,TongTien,TrangThai,KHACHHANG.SDT\n"
+                + "                FROM HOADON\n"
+                + "                INNER JOIN KHACHHANG  ON HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "                INNER JOIN NGUOIDUNG ON   HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "                WHERE TrangThai = N'Đã Thanh Toán' ";
         ArrayList<ThongKe_DoanhThu_Model> ls = new ArrayList<>();
         try (Connection conn = Dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe_DoanhThu_Model tk = new ThongKe_DoanhThu_Model();
                 tk.setMaHoaDon(rs.getInt(1));
-                tk.setMaKhachHang(rs.getInt(2));
-                tk.setMaNhanVien(rs.getInt(3));
+                tk.setTenKhachHang(rs.getString(2));
+                tk.setTenNhanVien(rs.getString(3));
                 tk.setNgayTaoHoaDon(rs.getDate(4));
                 tk.setTongTien(rs.getDouble(5));
                 tk.setTrangThai(rs.getString(6));
-
+                tk.setSDT(rs.getString(7));
                 ls.add(tk);
             }
         } catch (Exception e) {
@@ -44,24 +44,25 @@ public class ThongKe_repository {
     }
 
     public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThuByID(int maHD) {
-        String sql = "SELECT MaHoaDon,KHACHHANG.MaKhachHang,NGUOIDUNG.MaNguoiDung,NgayTaoHoaDon,TongTien,TrangThai\n"
-                + "FROM HOADON\n"
-                + "INNER JOIN KHACHHANG  ON HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
-                + "INNER JOIN NGUOIDUNG ON   HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
-                + "WHERE TrangThai = N'Đã Thanh Toán' and MaHoaDon = '"+maHD+"'";
+        String sql = "SELECT MaHoaDon,KHACHHANG.TenKhachHang,NGUOIDUNG.TenNguoiDung,NgayTaoHoaDon,TongTien,TrangThai,KHACHHANG.SDT\n"
+                + "                FROM HOADON\n"
+                + "                INNER JOIN KHACHHANG  ON HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "                INNER JOIN NGUOIDUNG ON   HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "                WHERE TrangThai = N'Đã Thanh Toán'  and MaHoaDon = '" + maHD + "'";
         ArrayList<ThongKe_DoanhThu_Model> ls = new ArrayList<>();
         try (Connection conn = Dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe_DoanhThu_Model tk = new ThongKe_DoanhThu_Model();
                 tk.setMaHoaDon(rs.getInt(1));
-                tk.setMaKhachHang(rs.getInt(2));
-                tk.setMaNhanVien(rs.getInt(3));
+                tk.setTenKhachHang(rs.getString(2));
+                tk.setTenNhanVien(rs.getString(3));
                 tk.setNgayTaoHoaDon(rs.getDate(4));
                 tk.setTongTien(rs.getDouble(5));
                 tk.setTrangThai(rs.getString(6));
+                tk.setSDT(rs.getString(7));
                 ls.add(tk);
-               
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,6 +70,37 @@ public class ThongKe_repository {
         return ls;
     }
 
+    
+    public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThuBySDT(String SDT) {
+        String sql = "SELECT MaHoaDon,KHACHHANG.TenKhachHang,NGUOIDUNG.TenNguoiDung,NgayTaoHoaDon,TongTien,TrangThai,KHACHHANG.SDT\n"
+                + "                FROM HOADON\n"
+                + "                INNER JOIN KHACHHANG  ON HOADON.MaKhachHang = KHACHHANG.MaKhachHang\n"
+                + "                INNER JOIN NGUOIDUNG ON   HOADON.MaNguoiDung = NGUOIDUNG.MaNguoiDung\n"
+                + "                WHERE TrangThai = N'Đã Thanh Toán'  and KHACHHANG.SDT = '" + SDT + "'";
+        ArrayList<ThongKe_DoanhThu_Model> ls = new ArrayList<>();
+        try (Connection conn = Dbconnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ThongKe_DoanhThu_Model tk = new ThongKe_DoanhThu_Model();
+                tk.setMaHoaDon(rs.getInt(1));
+                tk.setTenKhachHang(rs.getString(2));
+                tk.setTenNhanVien(rs.getString(3));
+                tk.setNgayTaoHoaDon(rs.getDate(4));
+                tk.setTongTien(rs.getDouble(5));
+                tk.setTrangThai(rs.getString(6));
+                tk.setSDT(rs.getString(7));
+                ls.add(tk);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ls;
+    }
+
+    
+    
+    
     public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThuByThoiGian(Date ngayBatDau, Date ngayKetThuc) {
         String sql = "SELECT MaHoaDon,KHACHHANG.MaKhachHang,NGUOIDUNG.MaNguoiDung,NgayTaoHoaDon,TongTien,TrangThai\n"
                 + "FROM HOADON\n"

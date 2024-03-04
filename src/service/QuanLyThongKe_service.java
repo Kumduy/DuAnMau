@@ -16,37 +16,44 @@ import java.sql.Date;
  */
 public class QuanLyThongKe_service {
 
-    ThongKe_repository thongKe_DoanhThu_repository = new ThongKe_repository();
+     ThongKe_repository thongKe_DoanhThu_repository = new ThongKe_repository();
 
-    public ArrayList<SanPhamModel_view> getList_ThongKeSanPham() {
+    
+ 
+    public ArrayList<SanPhamModel_view> getList_ThongKeSanPham(){
         return thongKe_DoanhThu_repository.getList_ThongKeSanPham();
     }
 
-    public ArrayList<ThongKe_DoanhThu_Model> getList_ThongKeDoanhThu() {
+    
+    public ArrayList<ThongKe_DoanhThu_Model> getList_ThongKeDoanhThu(){
         return thongKe_DoanhThu_repository.getList_DoanhThu();
     }
-
-    public ArrayList<ThongKe_DoanhThu_Model> getList_ThongKeDoanhThuById(int maHD) {
+    
+    public ArrayList<ThongKe_DoanhThu_Model> getList_ThongKeDoanhThuById(int maHD){
         return thongKe_DoanhThu_repository.getList_DoanhThuByID(maHD);
     }
-
-    public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThuByThoiGian(Date ngayBatDau, Date ngayKetThuc) {
+    
+     public ArrayList<ThongKe_DoanhThu_Model> getList_ThongKeDoanhThuById(String SDT){
+        return thongKe_DoanhThu_repository.getList_DoanhThuBySDT(SDT);
+    }
+    
+    public ArrayList<ThongKe_DoanhThu_Model> getList_DoanhThuByThoiGian(Date ngayBatDau,Date ngayKetThuc){
         return thongKe_DoanhThu_repository.getList_DoanhThuByThoiGian(ngayBatDau, ngayKetThuc);
     }
-
-    public int getList_DoanhThuThanhCong() {
+    
+    public int getList_DoanhThuThanhCong(){
         return thongKe_DoanhThu_repository.getList_DoanhThuThanhCong();
     }
-
-    public int getList_DoanhThuThatBai() {
+    
+    public int getList_DoanhThuThatBai(){
         return thongKe_DoanhThu_repository.getList_DoanhThuThatBai();
     }
-
-    public int getList_DoanhThuThanhCongbyTime(Date ngayBatDau, Date ngayKetThuc) {
+    
+    public int getList_DoanhThuThanhCongbyTime(Date ngayBatDau, Date ngayKetThuc){
         return thongKe_DoanhThu_repository.getList_DoanhThuThanhCongbyTime(ngayBatDau, ngayKetThuc);
     }
-
-    public int getList_DoanhThuThatBaibyTime(Date ngayBatDau, Date ngayKetThuc) {
+    
+    public int getList_DoanhThuThatBaibyTime(Date ngayBatDau, Date ngayKetThuc){
         return thongKe_DoanhThu_repository.getList_DoanhThuThatBaibyTime(ngayBatDau, ngayKetThuc);
     }
 
